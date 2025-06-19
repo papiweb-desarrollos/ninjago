@@ -1,0 +1,39 @@
+This is a placeholder for your video files.
+
+Please place your video files (e.g., .mp4, .webm) in this `public/videos/` directory.
+
+After adding your videos, you MUST update the `VIDEO_CATALOG` array in `src/VideoCatalog.tsx`.
+For each video, add an object like this to the array:
+
+{
+  id: "unique_video_id", // e.g., "vid1_intro"
+  title: "Your Video Title Displayed in App",
+  fileName: "your_video_file_name.mp4", // The actual file name in this directory
+  path: "/videos/your_video_file_name.mp4", // Path from public root
+  description: "A short description of your video (optional).",
+  thumbnail: "/videos/thumbnails/your_video_thumbnail.jpg" // Optional path to a thumbnail image
+}
+
+Example `VIDEO_CATALOG` in `src/VideoCatalog.tsx`:
+
+export const VIDEO_CATALOG: VideoInfo[] = [
+  {
+    id: "ninja_intro_01",
+    title: "The Way of the Ninja",
+    fileName: "ninja_way.mp4",
+    path: "/videos/ninja_way.mp4",
+    description: "An introduction to the ancient art of Ninjutsu.",
+    thumbnail: "/videos/thumbnails/ninja_way_thumb.png"
+  },
+  {
+    id: "shuriken_mastery_02",
+    title: "Shuriken Mastery",
+    fileName: "shuriken_skills.webm",
+    path: "/videos/shuriken_skills.webm",
+    description: "Learn advanced shuriken techniques from a master."
+  }
+  // ... more video objects
+];
+
+Ensure the `fileName` and `path` properties correctly match your files in this directory.
+Thumbnails are optional but recommended for a better UI in the video list. Place them in `public/videos/thumbnails/` or similar.
