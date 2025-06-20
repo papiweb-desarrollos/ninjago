@@ -1,0 +1,5 @@
+{
+  "name": "Ninja Go Action Arcade",
+  "description": "A fast-paced arcade game where you slice flying objects ninja-style to score points and avoid bombs. Test your reflexes!",
+  "requestFramePermissions": []
+}
