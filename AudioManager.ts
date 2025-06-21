@@ -5,7 +5,7 @@ class AudioManager {
   private audioContext: AudioContext | null = null;
   private soundCache: Map<SoundEffect, AudioBuffer> = new Map();
   private isMuted: boolean = false;
-  private globalVolume: number = 0.7; // Default volume (0.0 to 1.0)
+  private globalVolume: number = 0.9; // Default volume (0.0 to 1.0) - Aumentado para mejor experiencia
   private masterGainNode: GainNode | null = null;
   private isInitialized: boolean = false;
 
@@ -15,6 +15,7 @@ class AudioManager {
 
   constructor() {
     // AudioContext should be created/resumed after a user gesture.
+    this.loadVolumeSettings(); // Cargar configuraciones guardadas
   }
 
   public async initialize(): Promise<boolean> {
@@ -71,16 +72,19 @@ class AudioManager {
       }
     }
     const path = filePath || SOUND_FILES[effect];
+    console.log(`Loading sound ${effect} from path: ${path}`);
     if (!path) {
         console.error(`Sound path for ${effect} not found.`);
         return null;
     }
 
     if (this.soundCache.has(effect)) {
+      console.log(`Sound ${effect} already cached`);
       return this.soundCache.get(effect)!;
     }
 
     try {
+      console.log(`Fetching sound from: ${path}`);
       const response = await fetch(path);
       if (!response.ok) {
         throw new Error(`Failed to fetch sound ${effect}: ${response.statusText}`);
@@ -88,6 +92,7 @@ class AudioManager {
       const arrayBuffer = await response.arrayBuffer();
       const audioBuffer = await this.audioContext.decodeAudioData(arrayBuffer);
       this.soundCache.set(effect, audioBuffer);
+      console.log(`Successfully loaded sound ${effect}`);
       return audioBuffer;
     } catch (error) {
       console.error(`Error loading sound ${effect} from ${path}:`, error);
@@ -121,10 +126,19 @@ class AudioManager {
 
     const audioBuffer = this.soundCache.get(effect);
     if (!audioBuffer) {
-      console.warn(`Sound ${effect} not loaded. Attempting to load and play.`);
-      this.loadSound(effect).then(buffer => {
-          if (buffer) this.playSound(effect, volume, loop); // Retry once loaded
-      });
+      // Solo intentar cargar si no hemos fallado antes
+      const cacheKey = `failed_${effect}`;
+      if (!this.soundCache.has(cacheKey as any)) {
+        console.warn(`Sound ${effect} not loaded. Attempting to load once.`);
+        this.loadSound(effect).then(buffer => {
+          if (buffer) {
+            this.playSound(effect, volume, loop); // Retry once loaded
+          } else {
+            // Marcar como fallido para evitar intentos repetidos
+            this.soundCache.set(cacheKey as any, null as any);
+          }
+        });
+      }
       return null;
     }
 
@@ -145,7 +159,7 @@ class AudioManager {
     return source;
   }
 
-  public playMusic(effect: SoundEffect, volume: number = 0.3): void {
+  public playMusic(effect: SoundEffect, volume: number = 0.6): void {
     if (!this.audioContext || !this.masterGainNode) {
         console.warn("AudioContext not ready for music.");
         // Attempt to load and then play if context becomes available
@@ -213,6 +227,7 @@ class AudioManager {
       // Master gain controls overall mute/unmute state
       this.masterGainNode.gain.setValueAtTime(this.isMuted ? 0 : this.globalVolume, this.audioContext.currentTime);
     }
+    this.saveVolumeSettings(); // Guardar configuración automáticamente
     console.log(this.isMuted ? "Audio Muted" : "Audio Unmuted");
     return this.isMuted;
   }
@@ -226,10 +241,70 @@ class AudioManager {
     if (this.masterGainNode && this.audioContext && !this.isMuted) {
       this.masterGainNode.gain.setValueAtTime(this.globalVolume, this.audioContext.currentTime);
     }
-    // If music has its own gain node, and its volume was set considering globalVolume,
-    // changing globalVolume via masterGainNode is sufficient.
-    // If music volume should be independent of effects global volume, musicGainNode needs direct adjustment here.
-    // For now, masterGainNode handles the scaling for all connected nodes.
+    this.saveVolumeSettings(); // Guardar configuración automáticamente
+  }
+
+  public getGlobalVolume(): number {
+    return this.globalVolume;
+  }
+
+  public increaseMasterVolume(step: number = 0.1): void {
+    const newVolume = Math.min(1.0, this.globalVolume + step);
+    this.setGlobalVolume(newVolume);
+    console.log(`Volumen aumentado a: ${Math.round(newVolume * 100)}%`);
+  }
+
+  public decreaseMasterVolume(step: number = 0.1): void {
+    const newVolume = Math.max(0.0, this.globalVolume - step);
+    this.setGlobalVolume(newVolume);
+    console.log(`Volumen reducido a: ${Math.round(newVolume * 100)}%`);
+  }
+
+  public setMusicVolume(volume: number): void {
+    if (this.musicGainNode && this.audioContext) {
+      const clampedVolume = Math.max(0, Math.min(1, volume));
+      this.musicGainNode.gain.setValueAtTime(clampedVolume, this.audioContext.currentTime);
+      console.log(`Volumen de música ajustado a: ${Math.round(clampedVolume * 100)}%`);
+    }
+  }
+
+  public getCurrentMusicVolume(): number {
+    if (this.musicGainNode) {
+      return this.musicGainNode.gain.value;
+    }
+    return 0;
+  }
+
+  // Métodos para persistencia de configuración
+  public saveVolumeSettings(): void {
+    try {
+      const settings = {
+        globalVolume: this.globalVolume,
+        isMuted: this.isMuted,
+        timestamp: Date.now()
+      };
+      localStorage.setItem('ninjagoAudioSettings', JSON.stringify(settings));
+    } catch (e) {
+      console.warn('No se pudo guardar configuración de audio:', e);
+    }
+  }
+
+  public loadVolumeSettings(): void {
+    try {
+      const saved = localStorage.getItem('ninjagoAudioSettings');
+      if (saved) {
+        const settings = JSON.parse(saved);
+        // Solo cargar si los datos son recientes (menos de 30 días)
+        const thirtyDaysAgo = Date.now() - (30 * 24 * 60 * 60 * 1000);
+        if (settings.timestamp && settings.timestamp > thirtyDaysAgo) {
+          this.globalVolume = Math.max(0, Math.min(1, settings.globalVolume || 0.9));
+          this.isMuted = Boolean(settings.isMuted);
+          console.log(`Configuración de audio cargada: Vol=${Math.round(this.globalVolume * 100)}%, Muted=${this.isMuted}`);
+        }
+      }
+    } catch (e) {
+      console.warn('No se pudo cargar configuración de audio:', e);
+    }
   }
 }
 

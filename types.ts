@@ -43,7 +43,8 @@ export interface TargetState {
   size: number;
   points: number;
   createdAt: number; 
-  hit: boolean; 
+  hit: boolean;
+  villainImage?: string; // Optional para mantener compatibilidad
 }
 
 // Types for Maze Escape Mode

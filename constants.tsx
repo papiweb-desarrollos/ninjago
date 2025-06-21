@@ -1,8 +1,8 @@
 import React from 'react';
-import { GameObjectType, GameObjectConfig, MazeCellType, Direction, SoundEffect, ScoreOrbType, VideoInfo } from './types';
+import { GameObjectType, GameObjectConfig, Direction, SoundEffect, ScoreOrbType, VideoInfo } from './types';
 
-export const GAME_WIDTH = 800;
-export const GAME_HEIGHT = 600;
+export const GAME_WIDTH = 1200;
+export const GAME_HEIGHT = 800;
 export const INITIAL_LIVES = 3;
 export const OBJECT_SPAWN_INTERVAL_MS = 1000; // milliseconds
 export const OBJECT_MIN_SPEED = 1;
@@ -132,48 +132,215 @@ export const SCORE_ORB_DEFINITIONS: Record<ScoreOrbType, { basePoints: number; c
 };
 
 // Video Player Mode Constants
-// IMPORTANT: User must populate this list with their actual video files.
-// Files should be placed in the `public/videos/` directory.
+// Video catalog populated with actual video files from public/videos/ directory
 export const VIDEO_CATALOG: VideoInfo[] = [
-  // Example:
-  // { 
-  //   id: "vid1", 
-  //   title: "Ninja Training Montage", 
-  //   fileName: "ninja_montage.mp4", 
-  //   path: "/videos/ninja_montage.mp4",
-  //   description: "Watch the ninjas train hard!",
-  //   thumbnail: "/videos/thumbnails/ninja_montage_thumb.jpg" // Optional
-  // },
-  // { 
-  //   id: "vid2", 
-  //   title: "Sensei's Wisdom", 
-  //   fileName: "sensei_talk.webm",
-  //   path: "/videos/sensei_talk.webm",
-  //   description: "Listen to the wise words of the Sensei."
-  // },
-  // Add more VideoInfo objects here
+  // === CONTENIDO OFICIAL NINJAGO ===
+  { 
+    id: "ninjago1", 
+    title: "LEGO NINJAGO: Cacería - Temporada 9", 
+    fileName: "Episodio 93 - LEGO NINJAGO_ Cacería - Temporada 9.mp4", 
+    path: "/videos/Episodio 93 - LEGO NINJAGO_ Cacería - Temporada 9.mp4",
+    description: "Episodio 93 de la temporada 9 de LEGO NINJAGO"
+  },
+  { 
+    id: "ninjago2", 
+    title: "LEGO NINJAGO LA PELÍCULA - Trailer 2", 
+    fileName: "LEGO® NINJAGO® LA PELÍCULA - Trailer 2 - Oficial Warner Bros. Pictures.mp4",
+    path: "/videos/LEGO® NINJAGO® LA PELÍCULA - Trailer 2 - Oficial Warner Bros. Pictures.mp4",
+    description: "Trailer oficial 2 de la película de LEGO NINJAGO"
+  },
+  { 
+    id: "ninjago3", 
+    title: "Lego Ninjago La película", 
+    fileName: "Lego Ninjago La película  1.mp4",
+    path: "/videos/Lego Ninjago La película  1.mp4",
+    description: "Película completa de LEGO NINJAGO"
+  },
+  { 
+    id: "ninjago4", 
+    title: "Los de LEGO MOVIE como Polícias", 
+    fileName: "Los de LEGO MOVIE como Polícias.mp4",
+    path: "/videos/Los de LEGO MOVIE como Polícias.mp4",
+    description: "Episodio especial de LEGO MOVIE"
+  },
+  { 
+    id: "ninjago5", 
+    title: "NINJAGO: El Ascenso de los Dragones - Los perdidos", 
+    fileName: "Los perdidos 👀 ｜ T3, E1 ｜ Episodio completo ｜ LEGO NINJAGO： El Ascenso de los Dragones.mp4",
+    path: "/videos/Los perdidos 👀 ｜ T3, E1 ｜ Episodio completo ｜ LEGO NINJAGO： El Ascenso de los Dragones.mp4",
+    description: "Temporada 3, Episodio 1 - El Ascenso de los Dragones"
+  },
+  { 
+    id: "main", 
+    title: "Video Principal", 
+    fileName: "videoplayback.mp4",
+    path: "/videos/videoplayback.mp4",
+    description: "Video principal del juego"
+  },
+  
+  // === VIDEOS GENERADOS ===
+  { 
+    id: "gen1", 
+    title: "Video Generado 1:45PM", 
+    fileName: "Generated File June 20, 2025 - 1_45PM.mp4",
+    path: "/videos/Generated File June 20, 2025 - 1_45PM.mp4",
+    description: "Contenido generado - 20 de Junio 2025"
+  },
+  { 
+    id: "gen2", 
+    title: "Video Generado 1:46PM", 
+    fileName: "Generated File June 20, 2025 - 1_46PM.mp4",
+    path: "/videos/Generated File June 20, 2025 - 1_46PM.mp4",
+    description: "Contenido generado - 20 de Junio 2025"
+  },
+  { 
+    id: "gen3", 
+    title: "Video Generado 1:48PM", 
+    fileName: "Generated File June 20, 2025 - 1_48PM.mp4",
+    path: "/videos/Generated File June 20, 2025 - 1_48PM.mp4",
+    description: "Contenido generado - 20 de Junio 2025"
+  },
+  { 
+    id: "gen4", 
+    title: "Video Generado 1:50PM", 
+    fileName: "Generated File June 20, 2025 - 1_50PM.mp4",
+    path: "/videos/Generated File June 20, 2025 - 1_50PM.mp4",
+    description: "Contenido generado - 20 de Junio 2025"
+  },
+  { 
+    id: "gen5", 
+    title: "Video Generado 1:51PM", 
+    fileName: "Generated File June 20, 2025 - 1_51PM.mp4",
+    path: "/videos/Generated File June 20, 2025 - 1_51PM.mp4",
+    description: "Contenido generado - 20 de Junio 2025"
+  },
+  { 
+    id: "gen6", 
+    title: "Video Generado 1:53PM", 
+    fileName: "Generated File June 20, 2025 - 1_53PM.mp4",
+    path: "/videos/Generated File June 20, 2025 - 1_53PM.mp4",
+    description: "Contenido generado - 20 de Junio 2025"
+  },
+  { 
+    id: "gen7", 
+    title: "Video Generado 4:30PM", 
+    fileName: "Generated File June 20, 2025 - 4_30PM.mp4",
+    path: "/videos/Generated File June 20, 2025 - 4_30PM.mp4",
+    description: "Contenido generado - 20 de Junio 2025"
+  },
+  { 
+    id: "gen8", 
+    title: "Video Generado 4:31PM", 
+    fileName: "Generated File June 20, 2025 - 4_31PM.mp4",
+    path: "/videos/Generated File June 20, 2025 - 4_31PM.mp4",
+    description: "Contenido generado - 20 de Junio 2025"
+  },
+  { 
+    id: "gen9", 
+    title: "Video Generado 4:32PM", 
+    fileName: "Generated File June 20, 2025 - 4_32PM.mp4",
+    path: "/videos/Generated File June 20, 2025 - 4_32PM.mp4",
+    description: "Contenido generado - 20 de Junio 2025"
+  },
+  { 
+    id: "gen10", 
+    title: "Video Generado 4:34PM", 
+    fileName: "Generated File June 20, 2025 - 4_34PM.mp4",
+    path: "/videos/Generated File June 20, 2025 - 4_34PM.mp4",
+    description: "Contenido generado - 20 de Junio 2025"
+  },
+  { 
+    id: "gen11", 
+    title: "Video Generado 4:35PM", 
+    fileName: "Generated File June 20, 2025 - 4_35PM.mp4",
+    path: "/videos/Generated File June 20, 2025 - 4_35PM.mp4",
+    description: "Contenido generado - 20 de Junio 2025"
+  },
+  { 
+    id: "gen12", 
+    title: "Video Generado 5:15PM", 
+    fileName: "Generated File June 20, 2025 - 5_15PM.mp4",
+    path: "/videos/Generated File June 20, 2025 - 5_15PM.mp4",
+    description: "Contenido generado - 20 de Junio 2025"
+  },
+  { 
+    id: "gen13", 
+    title: "Video Generado 5:18PM", 
+    fileName: "Generated File June 20, 2025 - 5_18PM.mp4",
+    path: "/videos/Generated File June 20, 2025 - 5_18PM.mp4",
+    description: "Contenido generado - 20 de Junio 2025"
+  },
+  { 
+    id: "gen14", 
+    title: "Video Generado 5:19PM", 
+    fileName: "Generated File June 20, 2025 - 5_19PM.mp4",
+    path: "/videos/Generated File June 20, 2025 - 5_19PM.mp4",
+    description: "Contenido generado - 20 de Junio 2025"
+  },
+  { 
+    id: "gen15", 
+    title: "Video Generado 5:22PM", 
+    fileName: "Generated File June 20, 2025 - 5_22PM.mp4",
+    path: "/videos/Generated File June 20, 2025 - 5_22PM.mp4",
+    description: "Contenido generado - 20 de Junio 2025"
+  },
+  { 
+    id: "gen16", 
+    title: "Video Generado 5:23PM", 
+    fileName: "Generated File June 20, 2025 - 5_23PM.mp4",
+    path: "/videos/Generated File June 20, 2025 - 5_23PM.mp4",
+    description: "Contenido generado - 20 de Junio 2025"
+  },
+  { 
+    id: "gen17", 
+    title: "Video Generado 5:28PM", 
+    fileName: "Generated File June 20, 2025 - 5_28PM.mp4",
+    path: "/videos/Generated File June 20, 2025 - 5_28PM.mp4",
+    description: "Contenido generado - 20 de Junio 2025"
+  },
+  { 
+    id: "gen18", 
+    title: "Video Generado 5:29PM", 
+    fileName: "Generated File June 20, 2025 - 5_29PM.mp4",
+    path: "/videos/Generated File June 20, 2025 - 5_29PM.mp4",
+    description: "Contenido generado - 20 de Junio 2025"
+  },
+  { 
+    id: "gen19", 
+    title: "Video Generado 5:31PM", 
+    fileName: "Generated File June 20, 2025 - 5_31PM.mp4",
+    path: "/videos/Generated File June 20, 2025 - 5_31PM.mp4",
+    description: "Contenido generado - 20 de Junio 2025"
+  },
+  { 
+    id: "gen20", 
+    title: "Video Generado 5:32PM", 
+    fileName: "Generated File June 20, 2025 - 5_32PM.mp4",
+    path: "/videos/Generated File June 20, 2025 - 5_32PM.mp4",
+    description: "Contenido generado - 20 de Junio 2025"
+  }
 ];
 
 
-// Sound File Paths
+// Sound File Paths (usando solo archivos que existen)
 export const SOUND_FILES: Record<SoundEffect, string> = {
-  [SoundEffect.PLAYER_SHURIKEN_THROW]: '/sounds/player_shuriken_throw.wav',
-  [SoundEffect.PLAYER_KUNAI_THROW]: '/sounds/player_kunai_throw.wav',
-  [SoundEffect.PLAYER_BO_STAFF_ATTACK]: '/sounds/player_bo_staff_attack.wav',
-  [SoundEffect.PROJECTILE_HIT_WALL]: '/sounds/projectile_hit_wall.wav',
-  [SoundEffect.PROJECTILE_HIT_ROBOT]: '/sounds/projectile_hit_robot.wav',
-  [SoundEffect.ROBOT_MOVE_STEP]: '/sounds/robot_move_step.wav',
-  [SoundEffect.ROBOT_DEFEATED]: '/sounds/robot_defeated.wav',
-  [SoundEffect.ROBOT_RESPAWN]: '/sounds/robot_respawn.wav',
-  [SoundEffect.PLAYER_TAKE_DAMAGE]: '/sounds/player_take_damage.wav',
-  [SoundEffect.PLAYER_MOVE_STEP]: '/sounds/player_move_step.wav',
-  [SoundEffect.PLAYER_DEFEATED]: '/sounds/player_defeated.wav',
-  [SoundEffect.MAZE_EXIT_SUCCESS]: '/sounds/maze_exit_success.wav',
-  [SoundEffect.UI_CLICK_GENERAL]: '/sounds/ui_click.mp3', // Updated to mp3
-  [SoundEffect.BACKGROUND_MAZE_MUSIC]: '/sounds/background_maze_music.mp3',
+  [SoundEffect.PLAYER_SHURIKEN_THROW]: '/sounds/lasergun-152375.mp3',
+  [SoundEffect.PLAYER_KUNAI_THROW]: '/sounds/lasergun-152375.mp3',
+  [SoundEffect.PLAYER_BO_STAFF_ATTACK]: '/sounds/realistic-shotgun-cocking-sound-38640.mp3',
+  [SoundEffect.PROJECTILE_HIT_WALL]: '/sounds/gunshot-352466.mp3',
+  [SoundEffect.PROJECTILE_HIT_ROBOT]: '/sounds/gunfire-single-shot-colt-peacemaker-94951.mp3',
+  [SoundEffect.ROBOT_MOVE_STEP]: '/sounds/ui_click.mp3',
+  [SoundEffect.ROBOT_DEFEATED]: '/sounds/heathers-gunshot-effect2-100653.mp3',
+  [SoundEffect.ROBOT_RESPAWN]: '/sounds/ui_click.mp3',
+  [SoundEffect.PLAYER_TAKE_DAMAGE]: '/sounds/gun-shots-230534.mp3',
+  [SoundEffect.PLAYER_MOVE_STEP]: '/sounds/ui_click.mp3',
+  [SoundEffect.PLAYER_DEFEATED]: '/sounds/glock19-18535.mp3',
+  [SoundEffect.MAZE_EXIT_SUCCESS]: '/sounds/ui_click.mp3',
+  [SoundEffect.UI_CLICK_GENERAL]: '/sounds/ui_click.mp3',
+  [SoundEffect.BACKGROUND_MAZE_MUSIC]: '/sounds/NINJAGO La Senda del Ninja Papiweb.mp3',
   [SoundEffect.BACKGROUND_NINJAGO_THEME]: '/sounds/NINJAGO La Senda del Ninja Papiweb.mp3',
   [SoundEffect.BACKGROUND_WEEKEND_WHIP]: '/sounds/THE WEEKEND WHIP Intro en Español NINJAGO Papiweb.mp3', 
-  [SoundEffect.SCORE_ORB_COLLECT]: '/sounds/score_orb_collect.wav', 
+  [SoundEffect.SCORE_ORB_COLLECT]: '/sounds/ui_click.mp3', // Cambiado a un archivo que existe
 };
 
 // SVG Icons
@@ -215,37 +382,37 @@ export const TargetIcon: React.FC<{ size?: number; className?: string; color?: s
 );
 
 export const PlayerNinjaIcon: React.FC<{ size?: number; className?: string; style?: React.CSSProperties; isHit?: boolean }> = ({ size = PLAYER_SIZE, className, style, isHit}) => (
-  <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" 
-       className={`${className} ${isHit ? PLAYER_HIT_COLOR : PLAYER_COLOR} transition-colors duration-100`} style={style}>
-    <path d="M12 4C9.79 4 8 5.79 8 8s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4zm0 6c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2z" fill="currentColor"/>
-    <path d="M12 13c-3.31 0-6 2.69-6 6v1h12v-1c0-3.31-2.69-6-6-6zm-4 5c.18-1.53 1.52-2.82 3-3.22V17h2v-2.22c1.48.4 2.82 1.69 3 3.22H8z" fill="currentColor"/>
-    <rect x="9" y="11.5" width="6" height="1.5" rx="0.5" className={isHit ? "fill-red-300" : "fill-gray-400"} />
-  </svg>
+  <div 
+    className={`${className} ${isHit ? 'brightness-125 contrast-125' : ''} transition-all duration-100 rounded-full overflow-hidden border-2 border-lime-400 shadow-lg`} 
+    style={{
+      width: size,
+      height: size,
+      backgroundImage: 'url(/pictures/misc/Lloyd_Garmadon.png)',
+      backgroundSize: 'cover',
+      backgroundPosition: 'center',
+      ...style
+    }}
+  />
 );
 
 export const RobotEnemyIcon: React.FC<{ size?: number; className?: string; style?: React.CSSProperties; isHit?: boolean; isDefeated?: boolean }> = ({ size = ROBOT_SIZE, className, style, isHit, isDefeated }) => {
-  const mainColor = isDefeated ? ROBOT_DEFEATED_COLOR : (isHit ? ROBOT_HIT_COLOR : ROBOT_COLOR);
+  const filterEffect = isDefeated ? 'grayscale(100%) brightness(0.5)' : (isHit ? 'brightness(150%) contrast(120%) hue-rotate(90deg)' : 'none');
+  
   return (
-    <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" 
-         className={`${className} ${mainColor} transition-colors duration-100`} style={style}>
-      {isDefeated ? (
-        <> 
-          <path d="M16.121 6.465l-2.828-2.829-1.414 1.414 2.828 2.829-1.414 1.414-2.828-2.828-1.414 1.414 2.828 2.828-2.121 2.121-1.414-1.414-2.828 2.828 1.414 1.414-2.828 2.829 2.121 2.121 2.828-2.828 1.414 1.414 2.828-2.828 1.414-1.414 2.828 2.828 1.414 1.414-2.828-2.829 1.414-1.414 2.828 2.828 2.121-2.12L18.95 16.263l1.414-1.414-2.828-2.829 1.414-1.414 2.828 2.828-2.828 2.828-1.414-1.414-2.121 2.121zM9 12l-2-2 2-2 2 2-2 2z" fill="currentColor" opacity="0.7"/>
-          <path d="M12 20a8 8 0 01-5.657-2.343l1.414-1.414A6 6 0 0012 18a6 6 0 004.243-1.757l1.414 1.414A8 8 0 0112 20z" fill="currentColor" opacity="0.5"/>
-        </>
-      ) : (
-        <> 
-          <rect x="5" y="3" width="14" height="16" rx="2" fill="currentColor" />
-          <rect x="7" y="2" width="10" height="3" rx="1" className={ROBOT_EYE_COLOR} /> 
-          <circle cx="9" cy="11" r="1.5" fill="black" opacity="0.5"/>
-          <circle cx="15" cy="11" r="1.5" fill="black" opacity="0.5"/>
-          <rect x="6" y="16" width="3" height="5" rx="1" fill="currentColor"/> 
-          <rect x="15" y="16" width="3" height="5" rx="1" fill="currentColor"/> 
-          <rect x="2" y="7" width="3" height="5" rx="1" fill="currentColor"/> 
-          <rect x="19" y="7" width="3" height="5" rx="1" fill="currentColor"/> 
-        </>
-      )}
-    </svg>
+    <div 
+      className={`${className} transition-all duration-100 rounded-full overflow-hidden border-2 ${
+        isDefeated ? 'border-gray-500' : (isHit ? 'border-red-500' : 'border-red-600')
+      } shadow-lg`} 
+      style={{
+        width: size,
+        height: size,
+        backgroundImage: 'url(/pictures/villains/FangtomS1.webp)',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        filter: filterEffect,
+        ...style
+      }}
+    />
   );
 };
 

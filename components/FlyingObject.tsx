@@ -1,6 +1,7 @@
 import React from 'react';
 import { FlyingObjectState, GameObjectType } from '../types';
 import { OBJECT_ICONS } from '../constants';
+import { EnhancedGameObject } from './ui/EnhancedGameObject';
 
 interface FlyingObjectProps {
   objectState: FlyingObjectState;
@@ -18,6 +19,13 @@ export const FlyingObject: React.FC<FlyingObjectProps> = ({ objectState, onClick
     }
   };
 
+  const getObjectType = (): 'fruit' | 'bomb' | 'bonus' | 'enemy' => {
+    if (type === GameObjectType.BOMB) return 'bomb';
+    if (type === GameObjectType.KUNAI) return 'bonus';
+    if (type === GameObjectType.SCROLL) return 'enemy';
+    return 'fruit';
+  };
+
   const interactiveProps = onClick 
     ? { 
         onClick: handleClick, 
@@ -31,18 +39,22 @@ export const FlyingObject: React.FC<FlyingObjectProps> = ({ objectState, onClick
       };
 
   return (
-    <div
-      className={`absolute ${onClick ? 'cursor-pointer' : 'cursor-default'} transition-transform duration-50 ease-linear`}
-      style={{
-        left: `${x}px`,
-        top: `${y}px`,
-        width: `${config.size}px`,
-        height: `${config.size}px`,
-        transform: `translate(-50%, -50%) rotate(${rotation}deg)`,
-      }}
-      {...interactiveProps}
+    <EnhancedGameObject
+      x={x}
+      y={y}
+      rotation={rotation}
+      objectType={getObjectType()}
+      className={`${onClick ? 'cursor-pointer' : 'cursor-default'} transition-transform duration-50 ease-linear`}
     >
-      <IconComponent size={config.size} className={`${config.color} w-full h-full`} />
-    </div>
+      <div
+        style={{
+          width: `${config.size}px`,
+          height: `${config.size}px`,
+        }}
+        {...interactiveProps}
+      >
+        <IconComponent size={config.size} className={`${config.color} w-full h-full`} />
+      </div>
+    </EnhancedGameObject>
   );
 };

@@ -26,13 +26,14 @@ export const VideoPlayerScreen: React.FC<VideoPlayerScreenProps> = ({ onBackToMe
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
   const [isGameFullScreen, setIsGameFullScreen] = useState(false); // Custom fullscreen within game container
+  const [isBrowserFullScreen, setIsBrowserFullScreen] = useState(false); // True browser fullscreen
   const [showControls, setShowControls] = useState(true);
   const [isAppMuted, setIsAppMuted] = useState(audioManager.getIsMuted());
   const [videoError, setVideoError] = useState<string | null>(null); // State for video errors
 
   const videoRef = useRef<HTMLVideoElement>(null);
   const playerContainerRef = useRef<HTMLDivElement>(null);
-  const controlsTimeoutRef = useRef<number | null>(null);
+  const controlsTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const audioInitializedRef = useRef(false);
 
    const tryInitializeAudio = useCallback(async () => {
@@ -174,16 +175,75 @@ export const VideoPlayerScreen: React.FC<VideoPlayerScreenProps> = ({ onBackToMe
     setShowControls(true); // Ensure controls are visible to show error and back button
   };
 
-  const toggleGameFullScreen = () => {
-    setIsGameFullScreen(!isGameFullScreen);
+  const toggleGameFullScreen = async () => {
+    try {
+      if (!document.fullscreenElement) {
+        // Entrar en pantalla completa del navegador
+        if (playerContainerRef.current?.requestFullscreen) {
+          await playerContainerRef.current.requestFullscreen();
+        }
+      } else {
+        // Salir de pantalla completa del navegador
+        await document.exitFullscreen();
+      }
+    } catch (error) {
+      console.error('Error toggling fullscreen:', error);
+      // Fallback: usar solo el modo "fullscreen" dentro del juego
+      setIsGameFullScreen(!isGameFullScreen);
+    }
   };
 
-  const handleBackToList = () => {
+  // Escuchar cambios de pantalla completa del navegador
+  useEffect(() => {
+    const handleFullscreenChange = () => {
+      const isCurrentlyFullscreen = !!document.fullscreenElement;
+      setIsBrowserFullScreen(isCurrentlyFullscreen);
+      if (isCurrentlyFullscreen) {
+        setIsGameFullScreen(true);
+      } else {
+        setIsGameFullScreen(false);
+      }
+    };
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape' && (isBrowserFullScreen || isGameFullScreen)) {
+        if (document.fullscreenElement) {
+          document.exitFullscreen().catch(console.error);
+        } else {
+          setIsGameFullScreen(false);
+        }
+      }
+      // Barra espaciadora para play/pause
+      if (event.key === ' ' && currentVideo) {
+        event.preventDefault();
+        handlePlayPause();
+      }
+    };
+
+    document.addEventListener('fullscreenchange', handleFullscreenChange);
+    document.addEventListener('keydown', handleKeyDown);
+    
+    return () => {
+      document.removeEventListener('fullscreenchange', handleFullscreenChange);
+      document.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [isBrowserFullScreen, isGameFullScreen, currentVideo, handlePlayPause]);
+
+  const handleBackToList = async () => {
     if (videoRef.current) videoRef.current.pause();
     setIsPlaying(false);
     setCurrentVideo(null);
-    setIsGameFullScreen(false); 
+    setIsGameFullScreen(false);
     setVideoError(null); // Clear errors when going back
+    
+    // Salir de pantalla completa si está activa
+    if (document.fullscreenElement) {
+      try {
+        await document.exitFullscreen();
+      } catch (error) {
+        console.error('Error exiting fullscreen:', error);
+      }
+    }
   };
   
   const handleMouseMove = () => {
@@ -204,45 +264,82 @@ export const VideoPlayerScreen: React.FC<VideoPlayerScreenProps> = ({ onBackToMe
 
   if (!currentVideo) {
     return (
-      <div className="flex flex-col h-full w-full bg-slate-800 text-white p-4 overflow-y-auto">
-        <div className="flex justify-between items-center mb-4">
+      <div 
+        className="flex flex-col w-full bg-slate-800 text-white"
+        style={{ width: GAME_WIDTH, height: GAME_HEIGHT }}
+      >
+        {/* Header fijo */}
+        <div className="flex justify-between items-center p-4 bg-slate-900 border-b border-slate-600 flex-shrink-0">
           <h1 className="text-3xl font-bold text-sky-400">Ninja Video Archives</h1>
           <Button onClick={onBackToMenu} variant="secondary">Back to Menu</Button>
         </div>
-        {VIDEO_CATALOG.length === 0 && (
-          <p className="text-center text-slate-400 text-lg mt-8">
-            No videos found in the catalog. Please add videos to 
-            <code className="bg-slate-700 px-1 rounded mx-1">public/videos/</code> 
-            and update <code className="bg-slate-700 px-1 rounded mx-1">VIDEO_CATALOG</code> in 
-            <code className="bg-slate-700 px-1 rounded mx-1">src/constants.tsx</code>.
-          </p>
-        )}
-        <ul className="space-y-3">
-          {VIDEO_CATALOG.map(video => (
-            <li key={video.id} 
-                className="bg-slate-700 p-4 rounded-lg hover:bg-slate-600 transition-colors cursor-pointer shadow-md"
+        
+        {/* Contenido scrolleable */}
+        <div className="flex-1 overflow-y-auto p-4">
+          {VIDEO_CATALOG.length === 0 && (
+            <p className="text-center text-slate-400 text-lg mt-8">
+              No videos found in the catalog. Please add videos to 
+              <code className="bg-slate-700 px-1 rounded mx-1">public/videos/</code> 
+              and update <code className="bg-slate-700 px-1 rounded mx-1">VIDEO_CATALOG</code> in 
+              <code className="bg-slate-700 px-1 rounded mx-1">src/constants.tsx</code>.
+            </p>
+          )}
+          
+          {/* Lista de videos con scroll personalizado */}
+          <div className="space-y-3 max-h-full pr-2 custom-scrollbar">
+            {VIDEO_CATALOG.map(video => (
+              <div 
+                key={video.id} 
+                className="bg-slate-700 p-4 rounded-lg hover:bg-slate-600 transition-all duration-200 cursor-pointer shadow-md hover:shadow-lg transform hover:scale-[1.02]"
                 onClick={() => handleVideoSelect(video)}
                 role="button"
                 tabIndex={0}
                 onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') handleVideoSelect(video);}}
                 aria-label={`Play video: ${video.title}`}
-            >
-              <div className="flex items-center space-x-3">
-                {video.thumbnail ? (
-                  <img src={video.thumbnail} alt={video.title} className="w-24 h-16 object-cover rounded"/>
-                ) : (
-                  <div className="w-24 h-16 bg-slate-500 rounded flex items-center justify-center">
-                    <FilmIcon size={32} className="text-slate-400"/>
+              >
+                <div className="flex items-center space-x-3">
+                  {video.thumbnail ? (
+                    <img src={video.thumbnail} alt={video.title} className="w-24 h-16 object-cover rounded"/>
+                  ) : (
+                    <div className="w-24 h-16 bg-slate-500 rounded flex items-center justify-center flex-shrink-0">
+                      <FilmIcon size={32} className="text-slate-400"/>
+                    </div>
+                  )}
+                  <div className="flex-1 min-w-0">
+                    <h2 className="text-xl font-semibold text-sky-300 truncate">{video.title}</h2>
+                    {video.description && (
+                      <p className="text-sm text-slate-400 mt-1 line-clamp-2 overflow-hidden">{video.description}</p>
+                    )}
                   </div>
-                )}
-                <div>
-                  <h2 className="text-xl font-semibold text-sky-300">{video.title}</h2>
-                  {video.description && <p className="text-sm text-slate-400 mt-1">{video.description}</p>}
                 </div>
               </div>
-            </li>
-          ))}
-        </ul>
+            ))}
+          </div>
+        </div>
+        
+        {/* Estilo CSS para scroll personalizado */}
+        <style>{`
+          .custom-scrollbar::-webkit-scrollbar {
+            width: 8px;
+          }
+          .custom-scrollbar::-webkit-scrollbar-track {
+            background: rgb(51, 65, 85);
+            border-radius: 4px;
+          }
+          .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: rgb(71, 85, 105);
+            border-radius: 4px;
+          }
+          .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: rgb(100, 116, 139);
+          }
+          .line-clamp-2 {
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+          }
+        `}</style>
       </div>
     );
   }
@@ -251,8 +348,14 @@ export const VideoPlayerScreen: React.FC<VideoPlayerScreenProps> = ({ onBackToMe
   return (
     <div 
       ref={playerContainerRef}
-      className={`relative flex flex-col items-center justify-center bg-black text-white transition-all duration-300 ease-in-out ${isGameFullScreen ? 'fixed inset-0 z-50 w-screen h-screen' : 'w-full h-full'}`}
-      style={!isGameFullScreen ? {width: GAME_WIDTH, height: GAME_HEIGHT} : {}}
+      className={`relative flex flex-col items-center justify-center bg-black text-white transition-all duration-300 ease-in-out ${
+        isBrowserFullScreen 
+          ? 'fixed inset-0 z-50 w-screen h-screen' 
+          : isGameFullScreen 
+            ? 'fixed inset-0 z-50 w-screen h-screen' 
+            : 'w-full h-full'
+      }`}
+      style={!isGameFullScreen && !isBrowserFullScreen ? {width: GAME_WIDTH, height: GAME_HEIGHT} : {}}
       onMouseMove={handleMouseMove}
       onClick={() => setShowControls(true)} 
     >
@@ -260,7 +363,10 @@ export const VideoPlayerScreen: React.FC<VideoPlayerScreenProps> = ({ onBackToMe
         ref={videoRef}
         src={currentVideo.path}
         className="max-w-full max-h-full object-contain"
-        style={{ width: '100%', height: isGameFullScreen ? 'calc(100% - 60px)' : 'calc(100% - 60px)' }} 
+        style={{ 
+          width: '100%', 
+          height: isBrowserFullScreen || isGameFullScreen ? 'calc(100vh - 60px)' : 'calc(100% - 60px)' 
+        }} 
         onTimeUpdate={handleTimeUpdate}
         onLoadedMetadata={handleLoadedMetadata}
         onEnded={handleVideoEnded}
@@ -332,8 +438,8 @@ export const VideoPlayerScreen: React.FC<VideoPlayerScreenProps> = ({ onBackToMe
               >
                   {isAppMuted ? <SoundOffIcon size={20} /> : <SoundOnIcon size={20} />}
               </button>
-              <button onClick={toggleGameFullScreen} className="text-white hover:text-sky-400 p-1" aria-label={isGameFullScreen ? "Exit fullscreen" : "Enter fullscreen"}>
-                {isGameFullScreen ? <FullscreenExitIcon size={24} /> : <FullscreenEnterIcon size={24} />}
+              <button onClick={toggleGameFullScreen} className="text-white hover:text-sky-400 p-1" aria-label={isBrowserFullScreen || isGameFullScreen ? "Exit fullscreen" : "Enter fullscreen"}>
+                {isBrowserFullScreen || isGameFullScreen ? <FullscreenExitIcon size={24} /> : <FullscreenEnterIcon size={24} />}
               </button>
               <button onClick={handleBackToList} className="text-white hover:text-sky-400 p-1" aria-label="Back to video list">
                 <BackToListIcon size={24}/>
@@ -345,7 +451,14 @@ export const VideoPlayerScreen: React.FC<VideoPlayerScreenProps> = ({ onBackToMe
        
       {currentVideo && !videoError && (showControls || !isPlaying) && (
         <div className="absolute top-0 left-0 right-0 p-3 bg-gradient-to-b from-black/70 via-black/40 to-transparent pointer-events-none transition-opacity duration-300">
-            <h2 className="text-lg sm:text-xl font-semibold text-white truncate">{currentVideo.title}</h2>
+            <div className="flex items-center justify-between">
+              <h2 className="text-lg sm:text-xl font-semibold text-white truncate">{currentVideo.title}</h2>
+              {(isBrowserFullScreen || isGameFullScreen) && (
+                <span className="text-xs bg-black/50 px-2 py-1 rounded text-white">
+                  Pantalla Completa • ESC para salir
+                </span>
+              )}
+            </div>
         </div>
       )}
     </div>
