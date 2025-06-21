@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { Button } from './ui/Button';
 import { VolumeControl } from './ui/VolumeControl';
 import { AdvancedParticleSystem } from './ui/AdvancedParticleSystem';
-import { ShurikenIcon, ScrollIcon, BombIcon, TargetIcon, PlayerNinjaIcon, RobotEnemyIcon, StarIcon, FilmIcon } from '../constants';
+import { ShurikenIcon, ScrollIcon, BombIcon, TargetIcon, PlayerNinjaIcon, RobotEnemyIcon, StarIcon, FilmIcon, getAssetPath } from '../constants';
 import { AudioTest } from './AudioTest';
 import { audioManager } from '../AudioManager';
 import { SoundEffect } from '../types';
@@ -270,7 +270,7 @@ export const StartScreen: React.FC<StartScreenProps> = ({
             isTransitioning ? 'opacity-0 scale-105' : 'opacity-100 scale-100'
           }`}
           style={{
-            backgroundImage: `linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.7)), url(/pictures/misc/${BACKGROUND_IMAGES[currentBgIndex]})`,
+            backgroundImage: `linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.7)), url(${getAssetPath(`/pictures/misc/${BACKGROUND_IMAGES[currentBgIndex]}`)})`,
           }}
         />
         
@@ -280,7 +280,7 @@ export const StartScreen: React.FC<StartScreenProps> = ({
             isTransitioning ? 'opacity-100 scale-100' : 'opacity-0 scale-105'
           }`}
           style={{
-            backgroundImage: `linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.7)), url(/pictures/misc/${BACKGROUND_IMAGES[nextBgIndex]})`,
+            backgroundImage: `linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.7)), url(${getAssetPath(`/pictures/misc/${BACKGROUND_IMAGES[nextBgIndex]}`)})`,
           }}
         />
         

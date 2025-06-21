@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { ScoreOrbType } from '../../types';
+import { getAssetPath } from '../../constants';
 
 interface Particle {
   id: number;
@@ -287,7 +288,7 @@ export const EnhancedBonusEffects: React.FC<EnhancedBonusEffectsProps> = ({
               'w-24 h-24 border-blue-400'
             }`}
             style={{
-              backgroundImage: `url(/pictures/bonus/${explosion.image})`,
+              backgroundImage: `url(${getAssetPath(`/pictures/bonus/${explosion.image}`)})`,
               backgroundSize: 'cover',
               backgroundPosition: 'center',
               boxShadow: explosion.orbType === ScoreOrbType.JACKPOT 

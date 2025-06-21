@@ -1,6 +1,13 @@
 import React from 'react';
 import { GameObjectType, GameObjectConfig, Direction, SoundEffect, ScoreOrbType, VideoInfo } from './types';
 
+// Helper function to handle asset paths for GitHub Pages
+export const getAssetPath = (path: string): string => {
+  // In production (GitHub Pages), assets are served from the base path
+  const basePath = import.meta.env?.MODE === 'production' ? '/ninjago' : '';
+  return `${basePath}${path}`;
+};
+
 export const GAME_WIDTH = 1200;
 export const GAME_HEIGHT = 800;
 export const INITIAL_LIVES = 3;
@@ -139,42 +146,42 @@ export const VIDEO_CATALOG: VideoInfo[] = [
     id: "ninjago1", 
     title: "LEGO NINJAGO: Cacería - Temporada 9", 
     fileName: "Episodio 93 - LEGO NINJAGO_ Cacería - Temporada 9.mp4", 
-    path: "/videos/Episodio 93 - LEGO NINJAGO_ Cacería - Temporada 9.mp4",
+    path: getAssetPath("/videos/Episodio 93 - LEGO NINJAGO_ Cacería - Temporada 9.mp4"),
     description: "Episodio 93 de la temporada 9 de LEGO NINJAGO"
   },
   { 
     id: "ninjago2", 
     title: "LEGO NINJAGO LA PELÍCULA - Trailer 2", 
     fileName: "LEGO® NINJAGO® LA PELÍCULA - Trailer 2 - Oficial Warner Bros. Pictures.mp4",
-    path: "/videos/LEGO® NINJAGO® LA PELÍCULA - Trailer 2 - Oficial Warner Bros. Pictures.mp4",
+    path: getAssetPath("/videos/LEGO® NINJAGO® LA PELÍCULA - Trailer 2 - Oficial Warner Bros. Pictures.mp4"),
     description: "Trailer oficial 2 de la película de LEGO NINJAGO"
   },
   { 
     id: "ninjago3", 
     title: "Lego Ninjago La película", 
     fileName: "Lego Ninjago La película  1.mp4",
-    path: "/videos/Lego Ninjago La película  1.mp4",
+    path: getAssetPath("/videos/Lego Ninjago La película  1.mp4"),
     description: "Película completa de LEGO NINJAGO"
   },
   { 
     id: "ninjago4", 
     title: "Los de LEGO MOVIE como Polícias", 
     fileName: "Los de LEGO MOVIE como Polícias.mp4",
-    path: "/videos/Los de LEGO MOVIE como Polícias.mp4",
+    path: getAssetPath("/videos/Los de LEGO MOVIE como Polícias.mp4"),
     description: "Episodio especial de LEGO MOVIE"
   },
   { 
     id: "ninjago5", 
     title: "NINJAGO: El Ascenso de los Dragones - Los perdidos", 
     fileName: "Los perdidos 👀 ｜ T3, E1 ｜ Episodio completo ｜ LEGO NINJAGO： El Ascenso de los Dragones.mp4",
-    path: "/videos/Los perdidos 👀 ｜ T3, E1 ｜ Episodio completo ｜ LEGO NINJAGO： El Ascenso de los Dragones.mp4",
+    path: getAssetPath("/videos/Los perdidos 👀 ｜ T3, E1 ｜ Episodio completo ｜ LEGO NINJAGO： El Ascenso de los Dragones.mp4"),
     description: "Temporada 3, Episodio 1 - El Ascenso de los Dragones"
   },
   { 
     id: "main", 
     title: "Video Principal", 
     fileName: "videoplayback.mp4",
-    path: "/videos/videoplayback.mp4",
+    path: getAssetPath("/videos/videoplayback.mp4"),
     description: "Video principal del juego"
   },
   
@@ -183,140 +190,140 @@ export const VIDEO_CATALOG: VideoInfo[] = [
     id: "gen1", 
     title: "Video Generado 1:45PM", 
     fileName: "Generated File June 20, 2025 - 1_45PM.mp4",
-    path: "/videos/Generated File June 20, 2025 - 1_45PM.mp4",
+    path: getAssetPath("/videos/Generated File June 20, 2025 - 1_45PM.mp4"),
     description: "Contenido generado - 20 de Junio 2025"
   },
   { 
     id: "gen2", 
     title: "Video Generado 1:46PM", 
     fileName: "Generated File June 20, 2025 - 1_46PM.mp4",
-    path: "/videos/Generated File June 20, 2025 - 1_46PM.mp4",
+    path: getAssetPath("/videos/Generated File June 20, 2025 - 1_46PM.mp4"),
     description: "Contenido generado - 20 de Junio 2025"
   },
   { 
     id: "gen3", 
     title: "Video Generado 1:48PM", 
     fileName: "Generated File June 20, 2025 - 1_48PM.mp4",
-    path: "/videos/Generated File June 20, 2025 - 1_48PM.mp4",
+    path: getAssetPath("/videos/Generated File June 20, 2025 - 1_48PM.mp4"),
     description: "Contenido generado - 20 de Junio 2025"
   },
   { 
     id: "gen4", 
     title: "Video Generado 1:50PM", 
     fileName: "Generated File June 20, 2025 - 1_50PM.mp4",
-    path: "/videos/Generated File June 20, 2025 - 1_50PM.mp4",
+    path: getAssetPath("/videos/Generated File June 20, 2025 - 1_50PM.mp4"),
     description: "Contenido generado - 20 de Junio 2025"
   },
   { 
     id: "gen5", 
     title: "Video Generado 1:51PM", 
     fileName: "Generated File June 20, 2025 - 1_51PM.mp4",
-    path: "/videos/Generated File June 20, 2025 - 1_51PM.mp4",
+    path: getAssetPath("/videos/Generated File June 20, 2025 - 1_51PM.mp4"),
     description: "Contenido generado - 20 de Junio 2025"
   },
   { 
     id: "gen6", 
     title: "Video Generado 1:53PM", 
     fileName: "Generated File June 20, 2025 - 1_53PM.mp4",
-    path: "/videos/Generated File June 20, 2025 - 1_53PM.mp4",
+    path: getAssetPath("/videos/Generated File June 20, 2025 - 1_53PM.mp4"),
     description: "Contenido generado - 20 de Junio 2025"
   },
   { 
     id: "gen7", 
     title: "Video Generado 4:30PM", 
     fileName: "Generated File June 20, 2025 - 4_30PM.mp4",
-    path: "/videos/Generated File June 20, 2025 - 4_30PM.mp4",
+    path: getAssetPath("/videos/Generated File June 20, 2025 - 4_30PM.mp4"),
     description: "Contenido generado - 20 de Junio 2025"
   },
   { 
     id: "gen8", 
     title: "Video Generado 4:31PM", 
     fileName: "Generated File June 20, 2025 - 4_31PM.mp4",
-    path: "/videos/Generated File June 20, 2025 - 4_31PM.mp4",
+    path: getAssetPath("/videos/Generated File June 20, 2025 - 4_31PM.mp4"),
     description: "Contenido generado - 20 de Junio 2025"
   },
   { 
     id: "gen9", 
     title: "Video Generado 4:32PM", 
     fileName: "Generated File June 20, 2025 - 4_32PM.mp4",
-    path: "/videos/Generated File June 20, 2025 - 4_32PM.mp4",
+    path: getAssetPath("/videos/Generated File June 20, 2025 - 4_32PM.mp4"),
     description: "Contenido generado - 20 de Junio 2025"
   },
   { 
     id: "gen10", 
     title: "Video Generado 4:34PM", 
     fileName: "Generated File June 20, 2025 - 4_34PM.mp4",
-    path: "/videos/Generated File June 20, 2025 - 4_34PM.mp4",
+    path: getAssetPath("/videos/Generated File June 20, 2025 - 4_34PM.mp4"),
     description: "Contenido generado - 20 de Junio 2025"
   },
   { 
     id: "gen11", 
     title: "Video Generado 4:35PM", 
     fileName: "Generated File June 20, 2025 - 4_35PM.mp4",
-    path: "/videos/Generated File June 20, 2025 - 4_35PM.mp4",
+    path: getAssetPath("/videos/Generated File June 20, 2025 - 4_35PM.mp4"),
     description: "Contenido generado - 20 de Junio 2025"
   },
   { 
     id: "gen12", 
     title: "Video Generado 5:15PM", 
     fileName: "Generated File June 20, 2025 - 5_15PM.mp4",
-    path: "/videos/Generated File June 20, 2025 - 5_15PM.mp4",
+    path: getAssetPath("/videos/Generated File June 20, 2025 - 5_15PM.mp4"),
     description: "Contenido generado - 20 de Junio 2025"
   },
   { 
     id: "gen13", 
     title: "Video Generado 5:18PM", 
     fileName: "Generated File June 20, 2025 - 5_18PM.mp4",
-    path: "/videos/Generated File June 20, 2025 - 5_18PM.mp4",
+    path: getAssetPath("/videos/Generated File June 20, 2025 - 5_18PM.mp4"),
     description: "Contenido generado - 20 de Junio 2025"
   },
   { 
     id: "gen14", 
     title: "Video Generado 5:19PM", 
     fileName: "Generated File June 20, 2025 - 5_19PM.mp4",
-    path: "/videos/Generated File June 20, 2025 - 5_19PM.mp4",
+    path: getAssetPath("/videos/Generated File June 20, 2025 - 5_19PM.mp4"),
     description: "Contenido generado - 20 de Junio 2025"
   },
   { 
     id: "gen15", 
     title: "Video Generado 5:22PM", 
     fileName: "Generated File June 20, 2025 - 5_22PM.mp4",
-    path: "/videos/Generated File June 20, 2025 - 5_22PM.mp4",
+    path: getAssetPath("/videos/Generated File June 20, 2025 - 5_22PM.mp4"),
     description: "Contenido generado - 20 de Junio 2025"
   },
   { 
     id: "gen16", 
     title: "Video Generado 5:23PM", 
     fileName: "Generated File June 20, 2025 - 5_23PM.mp4",
-    path: "/videos/Generated File June 20, 2025 - 5_23PM.mp4",
+    path: getAssetPath("/videos/Generated File June 20, 2025 - 5_23PM.mp4"),
     description: "Contenido generado - 20 de Junio 2025"
   },
   { 
     id: "gen17", 
     title: "Video Generado 5:28PM", 
     fileName: "Generated File June 20, 2025 - 5_28PM.mp4",
-    path: "/videos/Generated File June 20, 2025 - 5_28PM.mp4",
+    path: getAssetPath("/videos/Generated File June 20, 2025 - 5_28PM.mp4"),
     description: "Contenido generado - 20 de Junio 2025"
   },
   { 
     id: "gen18", 
     title: "Video Generado 5:29PM", 
     fileName: "Generated File June 20, 2025 - 5_29PM.mp4",
-    path: "/videos/Generated File June 20, 2025 - 5_29PM.mp4",
+    path: getAssetPath("/videos/Generated File June 20, 2025 - 5_29PM.mp4"),
     description: "Contenido generado - 20 de Junio 2025"
   },
   { 
     id: "gen19", 
     title: "Video Generado 5:31PM", 
     fileName: "Generated File June 20, 2025 - 5_31PM.mp4",
-    path: "/videos/Generated File June 20, 2025 - 5_31PM.mp4",
+    path: getAssetPath("/videos/Generated File June 20, 2025 - 5_31PM.mp4"),
     description: "Contenido generado - 20 de Junio 2025"
   },
   { 
     id: "gen20", 
     title: "Video Generado 5:32PM", 
     fileName: "Generated File June 20, 2025 - 5_32PM.mp4",
-    path: "/videos/Generated File June 20, 2025 - 5_32PM.mp4",
+    path: getAssetPath("/videos/Generated File June 20, 2025 - 5_32PM.mp4"),
     description: "Contenido generado - 20 de Junio 2025"
   }
 ];
@@ -324,23 +331,23 @@ export const VIDEO_CATALOG: VideoInfo[] = [
 
 // Sound File Paths (usando solo archivos que existen)
 export const SOUND_FILES: Record<SoundEffect, string> = {
-  [SoundEffect.PLAYER_SHURIKEN_THROW]: '/sounds/lasergun-152375.mp3',
-  [SoundEffect.PLAYER_KUNAI_THROW]: '/sounds/lasergun-152375.mp3',
-  [SoundEffect.PLAYER_BO_STAFF_ATTACK]: '/sounds/realistic-shotgun-cocking-sound-38640.mp3',
-  [SoundEffect.PROJECTILE_HIT_WALL]: '/sounds/gunshot-352466.mp3',
-  [SoundEffect.PROJECTILE_HIT_ROBOT]: '/sounds/gunfire-single-shot-colt-peacemaker-94951.mp3',
-  [SoundEffect.ROBOT_MOVE_STEP]: '/sounds/ui_click.mp3',
-  [SoundEffect.ROBOT_DEFEATED]: '/sounds/heathers-gunshot-effect2-100653.mp3',
-  [SoundEffect.ROBOT_RESPAWN]: '/sounds/ui_click.mp3',
-  [SoundEffect.PLAYER_TAKE_DAMAGE]: '/sounds/gun-shots-230534.mp3',
-  [SoundEffect.PLAYER_MOVE_STEP]: '/sounds/ui_click.mp3',
-  [SoundEffect.PLAYER_DEFEATED]: '/sounds/glock19-18535.mp3',
-  [SoundEffect.MAZE_EXIT_SUCCESS]: '/sounds/ui_click.mp3',
-  [SoundEffect.UI_CLICK_GENERAL]: '/sounds/ui_click.mp3',
-  [SoundEffect.BACKGROUND_MAZE_MUSIC]: '/sounds/NINJAGO La Senda del Ninja Papiweb.mp3',
-  [SoundEffect.BACKGROUND_NINJAGO_THEME]: '/sounds/NINJAGO La Senda del Ninja Papiweb.mp3',
-  [SoundEffect.BACKGROUND_WEEKEND_WHIP]: '/sounds/THE WEEKEND WHIP Intro en Español NINJAGO Papiweb.mp3', 
-  [SoundEffect.SCORE_ORB_COLLECT]: '/sounds/ui_click.mp3', // Cambiado a un archivo que existe
+  [SoundEffect.PLAYER_SHURIKEN_THROW]: getAssetPath('/sounds/lasergun-152375.mp3'),
+  [SoundEffect.PLAYER_KUNAI_THROW]: getAssetPath('/sounds/lasergun-152375.mp3'),
+  [SoundEffect.PLAYER_BO_STAFF_ATTACK]: getAssetPath('/sounds/realistic-shotgun-cocking-sound-38640.mp3'),
+  [SoundEffect.PROJECTILE_HIT_WALL]: getAssetPath('/sounds/gunshot-352466.mp3'),
+  [SoundEffect.PROJECTILE_HIT_ROBOT]: getAssetPath('/sounds/gunfire-single-shot-colt-peacemaker-94951.mp3'),
+  [SoundEffect.ROBOT_MOVE_STEP]: getAssetPath('/sounds/ui_click.mp3'),
+  [SoundEffect.ROBOT_DEFEATED]: getAssetPath('/sounds/heathers-gunshot-effect2-100653.mp3'),
+  [SoundEffect.ROBOT_RESPAWN]: getAssetPath('/sounds/ui_click.mp3'),
+  [SoundEffect.PLAYER_TAKE_DAMAGE]: getAssetPath('/sounds/gun-shots-230534.mp3'),
+  [SoundEffect.PLAYER_MOVE_STEP]: getAssetPath('/sounds/ui_click.mp3'),
+  [SoundEffect.PLAYER_DEFEATED]: getAssetPath('/sounds/glock19-18535.mp3'),
+  [SoundEffect.MAZE_EXIT_SUCCESS]: getAssetPath('/sounds/ui_click.mp3'),
+  [SoundEffect.UI_CLICK_GENERAL]: getAssetPath('/sounds/ui_click.mp3'),
+  [SoundEffect.BACKGROUND_MAZE_MUSIC]: getAssetPath('/sounds/NINJAGO La Senda del Ninja Papiweb.mp3'),
+  [SoundEffect.BACKGROUND_NINJAGO_THEME]: getAssetPath('/sounds/NINJAGO La Senda del Ninja Papiweb.mp3'),
+  [SoundEffect.BACKGROUND_WEEKEND_WHIP]: getAssetPath('/sounds/THE WEEKEND WHIP Intro en Español NINJAGO Papiweb.mp3'), 
+  [SoundEffect.SCORE_ORB_COLLECT]: getAssetPath('/sounds/ui_click.mp3'), // Cambiado a un archivo que existe
 };
 
 // SVG Icons
@@ -387,7 +394,7 @@ export const PlayerNinjaIcon: React.FC<{ size?: number; className?: string; styl
     style={{
       width: size,
       height: size,
-      backgroundImage: 'url(/pictures/misc/Lloyd_Garmadon.png)',
+      backgroundImage: `url(${getAssetPath('/pictures/misc/Lloyd_Garmadon.png')})`,
       backgroundSize: 'cover',
       backgroundPosition: 'center',
       ...style
@@ -406,7 +413,7 @@ export const RobotEnemyIcon: React.FC<{ size?: number; className?: string; style
       style={{
         width: size,
         height: size,
-        backgroundImage: 'url(/pictures/villains/FangtomS1.webp)',
+        backgroundImage: `url(${getAssetPath('/pictures/villains/FangtomS1.webp')})`,
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         filter: filterEffect,

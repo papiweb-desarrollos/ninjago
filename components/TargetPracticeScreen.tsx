@@ -14,7 +14,8 @@ import {
   MAX_PROJECTILES_TARGET_MODE, // Corrected import
   OBJECT_MIN_ROTATION_SPEED,
   OBJECT_MAX_ROTATION_SPEED,
-  ShurikenIcon
+  ShurikenIcon,
+  getAssetPath
 } from '../constants';
 import { SuperExplosionSystem } from './ui/SuperExplosionSystem';
 
@@ -317,7 +318,7 @@ export const TargetPracticeScreen: React.FC<TargetPracticeScreenProps> = ({ onGa
             <div 
               className="w-full h-full rounded-full border-4 border-red-500 shadow-lg overflow-hidden relative animate-target-appear"
               style={{
-                backgroundImage: `url(/pictures/villains/${target.villainImage || VILLAIN_IMAGES[0]})`,
+                backgroundImage: `url(${getAssetPath(`/pictures/villains/${target.villainImage || VILLAIN_IMAGES[0]}`)})`,
                 backgroundSize: 'cover',
                 backgroundPosition: 'center',
                 boxShadow: `0 0 15px rgba(239, 68, 68, 0.6), inset 0 0 20px rgba(0, 0, 0, 0.3)`,
@@ -350,7 +351,7 @@ export const TargetPracticeScreen: React.FC<TargetPracticeScreenProps> = ({ onGa
           <div 
             className="w-32 h-32 rounded-full border-4 border-orange-400 shadow-2xl animate-villain-explosion overflow-hidden"
             style={{
-              backgroundImage: `url(/pictures/villains/${effect.villainImage})`,
+              backgroundImage: `url(${getAssetPath(`/pictures/villains/${effect.villainImage}`)})`,
               backgroundSize: 'cover',
               backgroundPosition: 'center',
               boxShadow: '0 0 50px rgba(255, 165, 0, 1), 0 0 100px rgba(255, 69, 0, 0.8)',

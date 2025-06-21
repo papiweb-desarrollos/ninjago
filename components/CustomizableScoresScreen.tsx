@@ -10,6 +10,7 @@ import {
   SCORE_ORB_DEFINITIONS,
   MAX_SCORE_ORBS_ON_SCREEN,
   SoundOnIcon, SoundOffIcon, StarIcon,
+  getAssetPath
 } from '../constants';
 import { audioManager } from '../AudioManager';
 import { EnhancedBonusEffects } from './ui/EnhancedBonusEffects';
@@ -485,7 +486,7 @@ export const CustomizableScoresScreen: React.FC<CustomizableScoresScreenProps> =
                       'w-20 h-20 border-blue-400 animate-spin-slow'
                     }`}
                     style={{
-                        backgroundImage: `url(/pictures/bonus/${effect.image})`,
+                        backgroundImage: `url(${getAssetPath(`/pictures/bonus/${effect.image}`)})`,
                         backgroundSize: 'cover',
                         backgroundPosition: 'center',
                         boxShadow: effect.orbType === ScoreOrbType.JACKPOT 
