@@ -1,44 +1,32 @@
-name: Deploy to GitHub Pages
+# Nombre del Workflow
+name: Build and Deploy to GitHub Pages
 
+# Disparador (trigger) del workflow
 on:
+  # Se ejecuta cada vez que haces un 'push' a la rama 'main'
   push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
+    branches:
+      - main # ¡IMPORTANTE!: Cambia 'main' si tu rama de desarrollo se llama diferente (ej. 'master')
 
 jobs:
   build-and-deploy:
+    # El tipo de máquina virtual donde se ejecutará el job
     runs-on: ubuntu-latest
-    
-    permissions:
-      contents: read
-      pages: write
-      id-token: write
-    
     steps:
-    - name: Checkout
-      uses: actions/checkout@v4
-      
-    - name: Setup Node.js
-      uses: actions/setup-node@v4
-      with:
-        node-version: '18'
-        cache: 'npm'
-        
-    - name: Install dependencies
-      run: npm ci
-      
-    - name: Build
-      run: npm run build
-      
-    - name: Setup Pages
-      uses: actions/configure-pages@v4
-      
-    - name: Upload artifact
-      uses: actions/upload-pages-artifact@v3
-      with:
-        path: './dist'
-        
-    - name: Deploy to GitHub Pages
-      id: deployment
-      uses: actions/deploy-pages@v4
+      # 1. Descarga el código de tu repositorio
+      - name: Checkout 🛎️
+        uses: actions/checkout@v3
+
+      # 2. Instala Node.js, instala dependencias y compila el proyecto
+      # Si usas 'yarn' en lugar de 'npm', cambia los comandos.
+      - name: Install and Build 🔧
+        run: |
+          npm install
+          npm run build
+
+      # 3. Despliega los archivos compilados a la rama 'gh-pages'
+      - name: Deploy 🚀
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          branch: gh-pages # La rama donde se desplegarán los archivos estáticos
+          folder: build   # La carpeta que contiene los archivos compilados (cambia a 'dist' si es necesario)
