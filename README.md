@@ -1,6 +1,6 @@
 # 🥷 Ninjago Arcade Game - Juego Gratis Online
 
-[![Netlify Status](https://api.netlify.com/api/v1/badges/your-site-id/deploy-status)](https://app.netlify.com/sites/ninjago-arcade/deploys)
+[![GitHub Pages](https://img.shields.io/badge/GitHub%20Pages-Live-brightgreen)](https://papiweb-desarrollos.github.io/ninjago/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=flat&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
 [![React](https://img.shields.io/badge/React-20232A?style=flat&logo=react&logoColor=61DAFB)](https://reactjs.org/)
@@ -9,7 +9,7 @@
 
 **Ninjago Arcade Game** es un emocionante juego de acción online gratuito inspirado en el universo LEGO Ninjago. Disfruta de múltiples modos de juego con gráficos avanzados, efectos de partículas y una experiencia de juego inmersiva.
 
-🌐 **[¡Jugar Ahora!](https://ninjago-arcade.netlify.app)**
+🌐 **[¡Jugar Ahora!](https://papiweb-desarrollos.github.io/ninjago/)**
 
 ## ✨ Características Principales
 
@@ -33,7 +33,7 @@
 - **Frontend**: React 18, TypeScript
 - **Styling**: Tailwind CSS, CSS Animations
 - **Build**: Vite
-- **Deployment**: Netlify
+- **Deployment**: GitHub Pages
 - **Audio**: Web Audio API
 - **Graphics**: Canvas API, CSS Effects
 
