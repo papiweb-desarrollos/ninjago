@@ -16,6 +16,7 @@ import {
   OBJECT_MAX_ROTATION_SPEED,
   ShurikenIcon
 } from '../constants';
+import { SuperExplosionSystem } from './ui/SuperExplosionSystem';
 
 interface TargetPracticeScreenProps {
   onGameOver: (score: number) => void;
@@ -40,6 +41,19 @@ export const TargetPracticeScreen: React.FC<TargetPracticeScreenProps> = ({ onGa
   const [timeLeft, setTimeLeft] = useState(TARGET_PRACTICE_DURATION_S);
   const [explosionEffects, setExplosionEffects] = useState<{id: string, x: number, y: number, points: number, villainImage: string, createdAt: number}[]>([]);
   const [hitEffects, setHitEffects] = useState<{id: string, x: number, y: number, createdAt: number, particles: {x: number, y: number, vx: number, vy: number, color: string, size: number}[]}[]>([]);
+  
+  // Enhanced explosions state
+  const [superExplosions, setSuperExplosions] = useState<Array<{
+    id: string;
+    x: number;
+    y: number;
+    intensity: number;
+    type: 'small' | 'medium' | 'large' | 'mega';
+    color?: string;
+    duration: number;
+    particles: any[];
+    createdAt: number;
+  }>>([]);
 
   const gameAreaRef = useRef<HTMLDivElement>(null);
   const lastSpawnTimeRef = useRef<number>(0);
@@ -72,6 +86,23 @@ export const TargetPracticeScreen: React.FC<TargetPracticeScreenProps> = ({ onGa
       y: y,
       points: points,
       villainImage: villainImage,
+      createdAt: performance.now()
+    }]);
+
+    // Crear explosión súper mejorada basada en puntos
+    const explosionIntensity = points >= 100 ? 2 : points >= 50 ? 1.5 : 1;
+    const explosionType = points >= 100 ? 'large' : points >= 50 ? 'medium' : 'small';
+    
+    const superExplosionId = generateId();
+    setSuperExplosions(prev => [...prev, {
+      id: superExplosionId,
+      x: x,
+      y: y,
+      intensity: explosionIntensity,
+      type: explosionType,
+      color: points >= 100 ? '#EF4444' : points >= 50 ? '#F59E0B' : '#10B981',
+      duration: explosionType === 'large' ? 3500 : explosionType === 'medium' ? 2500 : 1500,
+      particles: [],
       createdAt: performance.now()
     }]);
 
@@ -139,6 +170,11 @@ export const TargetPracticeScreen: React.FC<TargetPracticeScreenProps> = ({ onGa
     };
     setProjectiles(prev => [...prev, newProjectile]);
   }, [projectiles.length]);
+
+  // Callback for handling explosion completion
+  const handleSuperExplosionComplete = useCallback((id: string) => {
+    setSuperExplosions(prev => prev.filter(explosion => explosion.id !== id));
+  }, []);
 
   // Manejar clicks del mouse para lanzar proyectiles
   const handleGameAreaClick = (event: React.MouseEvent<HTMLDivElement>) => {
@@ -335,6 +371,12 @@ export const TargetPracticeScreen: React.FC<TargetPracticeScreenProps> = ({ onGa
         </div>
       ))}
 
+      {/* Enhanced Super Explosion System */}
+      <SuperExplosionSystem 
+        explosions={superExplosions}
+        onExplosionComplete={handleSuperExplosionComplete}
+      />
+
       {/* Efectos de partículas de explosión */}
       {hitEffects.map(effect => (
         <div key={effect.id} className="absolute pointer-events-none" style={{ left: effect.x, top: effect.y, zIndex: 25 }}>
@@ -359,6 +401,12 @@ export const TargetPracticeScreen: React.FC<TargetPracticeScreenProps> = ({ onGa
       {projectiles.map(proj => (
         <FlyingObject key={proj.id} objectState={proj} /> // No onClick for projectiles
       ))}
+      
+      {/* Enhanced Super Explosion System */}
+      <SuperExplosionSystem 
+        explosions={superExplosions}
+        onExplosionComplete={handleSuperExplosionComplete}
+      />
       
       {/* Launcher Area Visual Cue (optional) */}
       <div 

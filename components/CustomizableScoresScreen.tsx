@@ -12,6 +12,8 @@ import {
   SoundOnIcon, SoundOffIcon, StarIcon,
 } from '../constants';
 import { audioManager } from '../AudioManager';
+import { EnhancedBonusEffects } from './ui/EnhancedBonusEffects';
+import { SuperExplosionSystem } from './ui/SuperExplosionSystem';
 
 interface CustomizableScoresScreenProps {
   onGameOver: (score: number) => void;
@@ -63,6 +65,30 @@ export const CustomizableScoresScreen: React.FC<CustomizableScoresScreenProps> =
   const [collectedPointsDisplay, setCollectedPointsDisplay] = useState<{id: string, points: number, x: number, y: number}[]>([]);
   const [bonusImageEffects, setBonusImageEffects] = useState<{id: string, image: string, x: number, y: number, createdAt: number, orbType: ScoreOrbType}[]>([]);
   const [starExplosionParticles, setStarExplosionParticles] = useState<{id: string, x: number, y: number, createdAt: number, particles: {x: number, y: number, vx: number, vy: number, color: string, size: number}[]}[]>([]);
+
+  // New enhanced effects states
+  const [enhancedBonusExplosions, setEnhancedBonusExplosions] = useState<Array<{
+    id: string;
+    x: number;
+    y: number;
+    orbType: ScoreOrbType;
+    image: string;
+    particles: any[];
+    createdAt: number;
+    intensity: number;
+  }>>([]);
+  
+  const [superExplosions, setSuperExplosions] = useState<Array<{
+    id: string;
+    x: number;
+    y: number;
+    intensity: number;
+    type: 'small' | 'medium' | 'large' | 'mega';
+    color?: string;
+    duration: number;
+    particles: any[];
+    createdAt: number;
+  }>>([]);
 
 
   const gameAreaRef = useRef<HTMLDivElement>(null);
@@ -224,9 +250,41 @@ export const CustomizableScoresScreen: React.FC<CustomizableScoresScreenProps> =
       // Crear efecto de explosión de partículas según el tipo de orbe
       createStarExplosionEffect(clickX, clickY, orbType);
 
+      // Crear explosión súper mejorada
+      const explosionIntensity = orbType === ScoreOrbType.JACKPOT ? 2 : orbType === ScoreOrbType.BONUS ? 1.5 : 1;
+      const explosionType = orbType === ScoreOrbType.JACKPOT ? 'mega' : 
+                           orbType === ScoreOrbType.BONUS ? 'large' : 'medium';
+      
+      const superExplosionId = generateId();
+      setSuperExplosions(prev => [...prev, {
+        id: superExplosionId,
+        x: clickX,
+        y: clickY,
+        intensity: explosionIntensity,
+        type: explosionType,
+        color: orbType === ScoreOrbType.JACKPOT ? '#F59E0B' : 
+               orbType === ScoreOrbType.BONUS ? '#10B981' : '#3B82F6',
+        duration: explosionType === 'mega' ? 5000 : explosionType === 'large' ? 3500 : 2500,
+        particles: [],
+        createdAt: performance.now()
+      }]);
+
       // Mostrar imagen bonus aleatoria con efecto visual espectacular
       const randomImage = BONUS_IMAGES[Math.floor(Math.random() * BONUS_IMAGES.length)];
       const bonusEffectId = generateId();
+      
+      // Enhanced bonus effects
+      setEnhancedBonusExplosions(prev => [...prev, {
+        id: bonusEffectId,
+        x: clickX,
+        y: clickY,
+        orbType: orbType as ScoreOrbType,
+        image: randomImage,
+        particles: [],
+        createdAt: performance.now(),
+        intensity: explosionIntensity
+      }]);
+      
       setBonusImageEffects(prev => [...prev, {
         id: bonusEffectId, 
         image: randomImage, 
@@ -240,13 +298,13 @@ export const CustomizableScoresScreen: React.FC<CustomizableScoresScreenProps> =
       let duration = 2000;
       switch (orbType) {
         case ScoreOrbType.JACKPOT:
-          duration = 3000;
+          duration = 5000;
           break;
         case ScoreOrbType.BONUS:
-          duration = 2500;
+          duration = 3500;
           break;
         default:
-          duration = 2000;
+          duration = 2500;
           break;
       }
       setTimeout(() => {
@@ -326,6 +384,15 @@ export const CustomizableScoresScreen: React.FC<CustomizableScoresScreenProps> =
     setIsMuted(newMuteState);
     audioManager.playSound(SoundEffect.UI_CLICK_GENERAL, 0.5);
   }, [tryInitializeAudioAndMusic]);
+
+  // Callbacks for enhanced effects
+  const handleBonusExplosionComplete = useCallback((id: string) => {
+    setEnhancedBonusExplosions(prev => prev.filter(explosion => explosion.id !== id));
+  }, []);
+
+  const handleSuperExplosionComplete = useCallback((id: string) => {
+    setSuperExplosions(prev => prev.filter(explosion => explosion.id !== id));
+  }, []);
 
   return (
     <div
@@ -465,6 +532,17 @@ export const CustomizableScoresScreen: React.FC<CustomizableScoresScreenProps> =
                 </div>
             </div>
         ))}
+
+        {/* Enhanced Effects Systems */}
+        <EnhancedBonusEffects 
+          explosions={enhancedBonusExplosions}
+          onExplosionComplete={handleBonusExplosionComplete}
+        />
+        
+        <SuperExplosionSystem 
+          explosions={superExplosions}
+          onExplosionComplete={handleSuperExplosionComplete}
+        />
 
         {/* Efectos de partículas de explosión de estrellas */}
         {starExplosionParticles.map(explosion => (
