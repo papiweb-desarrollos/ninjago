@@ -15,28 +15,8 @@ export default defineConfig(({ mode }) => {
         }
       },
       publicDir: 'public',
-      server: {
-        cors: true,
-        headers: {
-          'Access-Control-Allow-Origin': '*',
-          'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
-          'Access-Control-Allow-Headers': 'Content-Type'
-        },
-        fs: {
-          allow: ['..']
-        }
-      },
       css: {
         postcss: './postcss.config.js'
       },
-      build: {
-        assetsDir: 'assets',
-        rollupOptions: {
-          output: {
-            manualChunks: undefined,
-            assetFileNames: 'assets/[name]-[hash][extname]'
-          }
-        }
-      }
     };
 });
