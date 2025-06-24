@@ -1,32 +1,57 @@
-# Nombre del Workflow
-name: Build and Deploy to GitHub Pages
+# Workflow para construir y desplegar un proyecto de React en GitHub Pages
+name: Deploy React App to GitHub Pages
 
-# Disparador (trigger) del workflow
 on:
-  # Se ejecuta cada vez que haces un 'push' a la rama 'main'
+  # Se ejecuta en pushes al branch "main"
   push:
     branches:
-      - main # ¡IMPORTANTE!: Cambia 'main' si tu rama de desarrollo se llama diferente (ej. 'master')
+      - main
+
+  # Permite ejecutar este workflow manualmente desde la pestaña de Actions
+  workflow_dispatch:
+
+# Permisos para el GITHUB_TOKEN para permitir el despliegue en GitHub Pages
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Permite un solo despliegue concurrente, cancelando los anteriores
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
 
 jobs:
-  build-and-deploy:
-    # El tipo de máquina virtual donde se ejecutará el job
+  # Job de despliegue
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
-      # 1. Descarga el código de tu repositorio
-      - name: Checkout 🛎️
-        uses: actions/checkout@v3
+      - name: Checkout
+        uses: actions/checkout@v4
 
-      # 2. Instala Node.js, instala dependencias y compila el proyecto
-      # Si usas 'yarn' en lugar de 'npm', cambia los comandos.
-      - name: Install and Build 🔧
-        run: |
-          npm install
-          npm run build
-
-      # 3. Despliega los archivos compilados a la rama 'gh-pages'
-      - name: Deploy 🚀
-        uses: JamesIves/github-pages-deploy-action@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
         with:
-          branch: gh-pages # La rama donde se desplegarán los archivos estáticos
-          folder: build   # La carpeta que contiene los archivos compilados (cambia a 'dist' si es necesario)
+          node-version: 18 # Puedes usar la versión de Node que prefieras
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build
+        run: npm run build # Este comando construye tu aplicación
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          # Sube el directorio 'build' que se genera con 'npm run build'
+          path: './build'
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
