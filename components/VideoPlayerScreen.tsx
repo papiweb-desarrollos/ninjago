@@ -7,6 +7,7 @@ import {
 } from '../constants';
 import { audioManager } from '../AudioManager';
 import { Button } from './ui/Button';
+import { useVideoAvailability } from '../hooks/useVideoAvailability';
 
 interface VideoPlayerScreenProps {
   onBackToMenu: () => void;
@@ -30,6 +31,8 @@ export const VideoPlayerScreen: React.FC<VideoPlayerScreenProps> = ({ onBackToMe
   const [showControls, setShowControls] = useState(true);
   const [isAppMuted, setIsAppMuted] = useState(audioManager.getIsMuted());
   const [videoError, setVideoError] = useState<string | null>(null); // State for video errors
+
+  const videoStatus = useVideoAvailability(VIDEO_CATALOG);
 
   const videoRef = useRef<HTMLVideoElement>(null);
   const playerContainerRef = useRef<HTMLDivElement>(null);
@@ -73,6 +76,14 @@ export const VideoPlayerScreen: React.FC<VideoPlayerScreenProps> = ({ onBackToMe
   }, [volume, isVideoMuted]);
 
   const handleVideoSelect = (video: VideoInfo) => {
+    const mode = (import.meta as any).env?.MODE || 'development';
+    console.log("📹 Selecting video:", {
+      title: video.title,
+      fileName: video.fileName,
+      path: video.path,
+      mode: mode,
+      basePath: mode === 'production' ? '/ninjago' : ''
+    });
     setCurrentVideo(video);
     setIsPlaying(false); // Start paused
     setCurrentTime(0);
@@ -150,25 +161,37 @@ export const VideoPlayerScreen: React.FC<VideoPlayerScreenProps> = ({ onBackToMe
     // More specific error based on video element's error object if available
     const videoElement = e.currentTarget;
     let errorMsg = `Error playing "${currentVideo?.title || 'this video'}".`;
+    
+    console.error("❌ Video Error:", {
+      videoTitle: currentVideo?.title,
+      videoPath: currentVideo?.path,
+      fileName: currentVideo?.fileName,
+      errorCode: videoElement.error?.code,
+      errorMessage: videoElement.error?.message,
+      src: videoElement.src,
+      networkState: videoElement.networkState,
+      readyState: videoElement.readyState
+    });
+    
     if (videoElement.error) {
         switch (videoElement.error.code) {
             case videoElement.error.MEDIA_ERR_ABORTED:
                 errorMsg += ' Playback aborted.';
                 break;
             case videoElement.error.MEDIA_ERR_NETWORK:
-                errorMsg += ' A network error occurred.';
+                errorMsg += ' A network error occurred. Check if the file exists at: ' + currentVideo?.path;
                 break;
             case videoElement.error.MEDIA_ERR_DECODE:
                 errorMsg += ' Error decoding the video. File might be corrupted or unsupported format.';
                 break;
             case videoElement.error.MEDIA_ERR_SRC_NOT_SUPPORTED:
-                errorMsg += ' Video format not supported or file not found.';
+                errorMsg += ' Video format not supported or file not found at: ' + currentVideo?.path;
                 break;
             default:
                 errorMsg += ' An unknown error occurred.';
         }
     } else {
-       errorMsg += ' The file might be missing, corrupted, or in an unsupported format.';
+       errorMsg += ' The file might be missing, corrupted, or in an unsupported format. Path: ' + currentVideo?.path;
     }
     setVideoError(errorMsg);
     setIsPlaying(false);
@@ -287,15 +310,24 @@ export const VideoPlayerScreen: React.FC<VideoPlayerScreenProps> = ({ onBackToMe
           
           {/* Lista de videos con scroll personalizado */}
           <div className="space-y-3 max-h-full pr-2 custom-scrollbar">
-            {VIDEO_CATALOG.map(video => (
+            {VIDEO_CATALOG.map(video => {
+              const status = videoStatus[video.id];
+              const isAvailable = status?.available ?? false;
+              const isLoading = status?.loading ?? true;
+              const error = status?.error;
+              const size = status?.size;
+              
+              return (
               <div 
                 key={video.id} 
-                className="bg-slate-700 p-4 rounded-lg hover:bg-slate-600 transition-all duration-200 cursor-pointer shadow-md hover:shadow-lg transform hover:scale-[1.02]"
-                onClick={() => handleVideoSelect(video)}
+                className={`bg-slate-700 p-4 rounded-lg transition-all duration-200 cursor-pointer shadow-md hover:shadow-lg transform hover:scale-[1.02] ${
+                  isAvailable ? 'hover:bg-slate-600' : 'opacity-60 cursor-not-allowed'
+                }`}
+                onClick={() => isAvailable && handleVideoSelect(video)}
                 role="button"
                 tabIndex={0}
-                onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') handleVideoSelect(video);}}
-                aria-label={`Play video: ${video.title}`}
+                onKeyDown={(e) => { if ((e.key === 'Enter' || e.key === ' ') && isAvailable) handleVideoSelect(video);}}
+                aria-label={`Play video: ${video.title}${isAvailable ? '' : ' (unavailable)'}`}
               >
                 <div className="flex items-center space-x-3">
                   {video.thumbnail ? (
@@ -306,14 +338,31 @@ export const VideoPlayerScreen: React.FC<VideoPlayerScreenProps> = ({ onBackToMe
                     </div>
                   )}
                   <div className="flex-1 min-w-0">
-                    <h2 className="text-xl font-semibold text-sky-300 truncate">{video.title}</h2>
+                    <div className="flex items-center gap-2">
+                      <h2 className="text-xl font-semibold text-sky-300 truncate">{video.title}</h2>
+                      {isLoading && <span className="text-yellow-400">⏳</span>}
+                      {!isLoading && isAvailable && <span className="text-green-400">✅</span>}
+                      {!isLoading && !isAvailable && <span className="text-red-400">❌</span>}
+                    </div>
                     {video.description && (
                       <p className="text-sm text-slate-400 mt-1 line-clamp-2 overflow-hidden">{video.description}</p>
                     )}
+                    {/* Status and debug info */}
+                    <div className="text-xs text-slate-500 mt-2 space-y-1">
+                      <div className="truncate">📁 File: {video.fileName}</div>
+                      <div className="truncate">🔗 Path: {video.path}</div>
+                      {size && (
+                        <div className="text-green-400">📦 Size: {(size / 1024 / 1024).toFixed(1)}MB</div>
+                      )}
+                      {error && (
+                        <div className="text-red-400">⚠️ {error}</div>
+                      )}
+                    </div>
                   </div>
                 </div>
               </div>
-            ))}
+              );
+            })}
           </div>
         </div>
         
