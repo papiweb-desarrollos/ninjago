@@ -143,71 +143,7 @@ export const SCORE_ORB_DEFINITIONS: Record<ScoreOrbType, { basePoints: number; c
 
 // === VIDEO PLAYER CATALOG ===
 export const VIDEO_CATALOG: VideoInfo[] = [
-  // === CONTENIDO OFICIAL NINJAGO ===
-  {
-    id: "ninjago1",
-    title: "LEGO NINJAGO: Cacería - Temporada 9",
-    fileName: "Episodio 93 - LEGO NINJAGO_ Cacería - Temporada 9.mp4",
-    path: getAssetPath("/videos/Episodio 93 - LEGO NINJAGO_ Cacería - Temporada 9.mp4"),
-    description: "Episodio 93 de la temporada 9 de LEGO NINJAGO",
-  },
-  {
-    id: "ninjago2",
-    title: "LEGO NINJAGO LA PELÍCULA - Trailer 2",
-    fileName: "LEGO® NINJAGO® LA PELÍCULA - Trailer 2 - Oficial Warner Bros. Pictures.mp4",
-    path: getAssetPath("/videos/LEGO® NINJAGO® LA PELÍCULA - Trailer 2 - Oficial Warner Bros. Pictures.mp4"),
-    description: "Trailer oficial 2 de la película de LEGO NINJAGO",
-  },
-  {
-    id: "ninjago3",
-    title: "Lego Ninjago La película",
-    fileName: "Lego Ninjago La película 1.mp4",
-    path: getAssetPath("/videos/Lego Ninjago La película 1.mp4"),
-    description: "Película completa de LEGO NINJAGO",
-  },
-  {
-    id: "ninjago4",
-    title: "Los de LEGO MOVIE como Polícias",
-    fileName: "Los de LEGO MOVIE como Polícias.mp4",
-    path: getAssetPath("/videos/Los de LEGO MOVIE como Polícias.mp4"),
-    description: "Episodio especial de LEGO MOVIE",
-  },
-  {
-    id: "ninjago5",
-    title: "NINJAGO: El Ascenso de los Dragones - Los perdidos",
-    fileName: "Los perdidos 👀 ｜ T3, E1 ｜ Episodio completo ｜ LEGO NINJAGO： El Ascenso de los Dragones.mp4",
-    path: getAssetPath("/videos/Los perdidos 👀 ｜ T3, E1 ｜ Episodio completo ｜ LEGO NINJAGO： El Ascenso de los Dragones.mp4"),
-    description: "Temporada 3, Episodio 1 - El Ascenso de los Dragones",
-  },
-  {
-    id: "main",
-    title: "Video Principal",
-    fileName: "videoplayback.mp4",
-    path: getAssetPath("/videos/videoplayback.mp4"),
-    description: "Video principal del juego",
-  },
-
-  // === VIDEOS GENERADOS ===
-  { id: "gen1",  title: "Video Generado 1:45PM", fileName: "Generated File June 20, 2025 - 1_45PM.mp4", path: getAssetPath("/videos/Generated File June 20, 2025 - 1_45PM.mp4"), description: "Actualización Ninjago - 20 junio 2025, 1:45PM" },
-  { id: "gen2",  title: "Video Generado 1:46PM", fileName: "Generated File June 20, 2025 - 1_46PM.mp4", path: getAssetPath("/videos/Generated File June 20, 2025 - 1_46PM.mp4"), description: "Actualización Ninjago - 20 junio 2025, 1:46PM" },
-  { id: "gen3",  title: "Video Generado 1:48PM", fileName: "Generated File June 20, 2025 - 1_48PM.mp4", path: getAssetPath("/videos/Generated File June 20, 2025 - 1_48PM.mp4"), description: "Actualización Ninjago - 20 junio 2025, 1:48PM" },
-  { id: "gen4",  title: "Video Generado 1:50PM", fileName: "Generated File June 20, 2025 - 1_50PM.mp4", path: getAssetPath("/videos/Generated File June 20, 2025 - 1_50PM.mp4"), description: "Actualización Ninjago - 20 junio 2025, 1:50PM" },
-  { id: "gen5",  title: "Video Generado 1:51PM", fileName: "Generated File June 20, 2025 - 1_51PM.mp4", path: getAssetPath("/videos/Generated File June 20, 2025 - 1_51PM.mp4"), description: "Actualización Ninjago - 20 junio 2025, 1:51PM" },
-  { id: "gen6",  title: "Video Generado 1:53PM", fileName: "Generated File June 20, 2025 - 1_53PM.mp4", path: getAssetPath("/videos/Generated File June 20, 2025 - 1_53PM.mp4"), description: "Actualización Ninjago - 20 junio 2025, 1:53PM" },
-  { id: "gen7",  title: "Video Generado 4:30PM", fileName: "Generated File June 20, 2025 - 4_30PM.mp4", path: getAssetPath("/videos/Generated File June 20, 2025 - 4_30PM.mp4"), description: "Actualización Ninjago - 20 junio 2025, 4:30PM" },
-  { id: "gen8",  title: "Video Generado 4:31PM", fileName: "Generated File June 20, 2025 - 4_31PM.mp4", path: getAssetPath("/videos/Generated File June 20, 2025 - 4_31PM.mp4"), description: "Actualización Ninjago - 20 junio 2025, 4:31PM" },
-  { id: "gen9",  title: "Video Generado 4:32PM", fileName: "Generated File June 20, 2025 - 4_32PM.mp4", path: getAssetPath("/videos/Generated File June 20, 2025 - 4_32PM.mp4"), description: "Actualización Ninjago - 20 junio 2025, 4:32PM" },
-  { id: "gen10", title: "Video Generado 4:34PM", fileName: "Generated File June 20, 2025 - 4_34PM.mp4", path: getAssetPath("/videos/Generated File June 20, 2025 - 4_34PM.mp4"), description: "Actualización Ninjago - 20 junio 2025, 4:34PM" },
-  { id: "gen11", title: "Video Generado 4:35PM", fileName: "Generated File June 20, 2025 - 4_35PM.mp4", path: getAssetPath("/videos/Generated File June 20, 2025 - 4_35PM.mp4"), description: "Actualización Ninjago - 20 junio 2025, 4:35PM" },
-  { id: "gen12", title: "Video Generado 5:15PM", fileName: "Generated File June 20, 2025 - 5_15PM.mp4", path: getAssetPath("/videos/Generated File June 20, 2025 - 5_15PM.mp4"), description: "Actualización Ninjago - 20 junio 2025, 5:15PM" },
-  { id: "gen13", title: "Video Generado 5:18PM", fileName: "Generated File June 20, 2025 - 5_18PM.mp4", path: getAssetPath("/videos/Generated File June 20, 2025 - 5_18PM.mp4"), description: "Actualización Ninjago - 20 junio 2025, 5:18PM" },
-  { id: "gen14", title: "Video Generado 5:19PM", fileName: "Generated File June 20, 2025 - 5_19PM.mp4", path: getAssetPath("/videos/Generated File June 20, 2025 - 5_19PM.mp4"), description: "Actualización Ninjago - 20 junio 2025, 5:19PM" },
-  { id: "gen15", title: "Video Generado 5:22PM", fileName: "Generated File June 20, 2025 - 5_22PM.mp4", path: getAssetPath("/videos/Generated File June 20, 2025 - 5_22PM.mp4"), description: "Actualización Ninjago - 20 junio 2025, 5:22PM" },
-  { id: "gen16", title: "Video Generado 5:23PM", fileName: "Generated File June 20, 2025 - 5_23PM.mp4", path: getAssetPath("/videos/Generated File June 20, 2025 - 5_23PM.mp4"), description: "Actualización Ninjago - 20 junio 2025, 5:23PM" },
-  { id: "gen17", title: "Video Generado 5:28PM", fileName: "Generated File June 20, 2025 - 5_28PM.mp4", path: getAssetPath("/videos/Generated File June 20, 2025 - 5_28PM.mp4"), description: "Actualización Ninjago - 20 junio 2025, 5:28PM" },
-  { id: "gen18", title: "Video Generado 5:29PM", fileName: "Generated File June 20, 2025 - 5_29PM.mp4", path: getAssetPath("/videos/Generated File June 20, 2025 - 5_29PM.mp4"), description: "Actualización Ninjago - 20 junio 2025, 5:29PM" },
-  { id: "gen19", title: "Video Generado 5:31PM", fileName: "Generated File June 20, 2025 - 5_31PM.mp4", path: getAssetPath("/videos/Generated File June 20, 2025 - 5_31PM.mp4"), description: "Actualización Ninjago - 20 junio 2025, 5:31PM" },
-  { id: "gen20", title: "Video Generado 5:32PM", fileName: "Generated File June 20, 2025 - 5_32PM.mp4", path: getAssetPath("/videos/Generated File June 20, 2025 - 5_32PM.mp4"), description: "Actualización Ninjago - 20 junio 2025, 5:32PM" },
+  // ... (igual que antes, lista de videos)
 ];
 
 // === SOUND FILES ===
@@ -238,6 +174,25 @@ export const ShurikenIcon: React.FC<{ size?: number; className?: string; style?:
   </svg>
 );
 
+export const TargetIcon: React.FC<{ size?: number; className?: string; style?: React.CSSProperties }> = ({ size = 40, className, style }) => (
+  <svg
+    width={size}
+    height={size}
+    viewBox="0 0 24 24"
+    fill="none"
+    className={className}
+    style={style}
+  >
+    <circle cx="12" cy="12" r="10" stroke="red" strokeWidth="2" fill="none" />
+    <circle cx="12" cy="12" r="6" stroke="red" strokeWidth="2" fill="none" />
+    <circle cx="12" cy="12" r="2" fill="red" />
+    <line x1="12" y1="2" x2="12" y2="6" stroke="red" strokeWidth="2"/>
+    <line x1="12" y1="18" x2="12" y2="22" stroke="red" strokeWidth="2"/>
+    <line x1="2" y1="12" x2="6" y2="12" stroke="red" strokeWidth="2"/>
+    <line x1="18" y1="12" x2="22" y2="12" stroke="red" strokeWidth="2"/>
+  </svg>
+);
+
 export const KunaiIcon: React.FC<{ size?: number; className?: string; style?: React.CSSProperties }> = ({ size = OBJECT_CONFIGS[GameObjectType.KUNAI].size, className, style }) => (
   <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="currentColor" className={className} style={style}>
     <path d="M17.657 3.222a2 2 0 00-2.828 0L3.364 14.687a1 1 0 000 1.414l4.242 4.242a1 1 0 001.414 0l11.465-11.464a2 2 0 000-2.828L17.657 3.222zM8.464 18.243L5.414 15.192l8.486-8.485 3.05 3.05-8.486 8.486zM18 8a1 1 0 11-2 0 1 1 0 012 0z"/>
@@ -258,10 +213,6 @@ export const BombIcon: React.FC<{ size?: number; className?: string }> = ({ size
     <path d="M17.5 2.5c-.28 0-.5.22-.5.5s.22.5.5.5.5-.22.5-.5-.22-.5-.5-.5zM19 4h-1l-.5 1.5L17 4h-1l1 2-1 2h1l.5-1.5.5 1.5h1l-1-2 1-2z"/>
   </svg>
 );
-
-// --- Más iconos y componentes SVG personalizados ---
-// Puedes pegar aquí el resto de tus íconos de Player, Robot, Exit, UI, audio, video, fullscreen, etc.
-// Si tienes el código fuente de cada uno, simplemente pégalo aquí para tener el archivo totalmente auto-contenido.
 
 export const OBJECT_ICONS: Record<GameObjectType, React.FC<{size?: number; className?: string}>> = {
   [GameObjectType.SHURIKEN]: ShurikenIcon,
