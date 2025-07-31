@@ -3,27 +3,27 @@ import { GameObjectType, GameObjectConfig, Direction, SoundEffect, ScoreOrbType,
 
 // Helper function to handle asset paths for GitHub Pages
 export const getAssetPath = (path: string): string => {
+  // In production (GitHub Pages), assets are served from the base path
   const basePath = import.meta.env?.MODE === 'production' ? '/ninjago' : '';
   return `${basePath}${path}`;
 };
 
-// === GAME SETTINGS ===
 export const GAME_WIDTH = 1200;
 export const GAME_HEIGHT = 800;
 export const INITIAL_LIVES = 3;
-export const OBJECT_SPAWN_INTERVAL_MS = 1000;
+export const OBJECT_SPAWN_INTERVAL_MS = 1000; // milliseconds
 export const OBJECT_MIN_SPEED = 1;
 export const OBJECT_MAX_SPEED = 3;
 export const OBJECT_MIN_ROTATION_SPEED = -5;
 export const OBJECT_MAX_ROTATION_SPEED = 5;
 
-// === TARGET PRACTICE MODE ===
-export const TARGET_PRACTICE_DURATION_S = 60;
+// Target Practice Mode Constants
+export const TARGET_PRACTICE_DURATION_S = 60; // seconds
 export const TARGET_MIN_SIZE = 25;
 export const TARGET_MAX_SIZE = 60;
 export const TARGET_SPAWN_INTERVAL_MS = 1200;
-export const TARGET_LIFESPAN_MS = 3500;
-export const SHURIKEN_LAUNCH_SPEED = 12;
+export const TARGET_LIFESPAN_MS = 3500; // How long a target stays if not hit
+export const SHURIKEN_LAUNCH_SPEED = 12; // Speed of launched shurikens in target mode
 export const MAX_PROJECTILES_TARGET_MODE = 10;
 
 export const TARGET_DEFINITIONS = [
@@ -32,19 +32,19 @@ export const TARGET_DEFINITIONS = [
   { size: TARGET_MAX_SIZE, points: 5, color: "fill-blue-400" },
 ];
 
-// === MAZE GAME CONSTANTS ===
-export const MAZE_WALL_COLOR_TOP = "from-slate-700";
+// Maze Theme Colors
+export const MAZE_WALL_COLOR_TOP = "from-slate-700"; // For gradient
 export const MAZE_WALL_COLOR_BOTTOM = "to-slate-600";
 export const MAZE_WALL_BORDER_COLOR = "border-slate-800";
 export const MAZE_PATH_COLOR = "bg-slate-500";
 export const MAZE_PATH_BORDER_COLOR = "border-slate-600";
 export const MAZE_START_COLOR = "bg-green-700";
 export const MAZE_EXIT_COLOR = "bg-sky-700";
-export const PLAYER_COLOR = "text-lime-400";
-export const PLAYER_HIT_COLOR = "text-red-500";
-export const ROBOT_COLOR = "text-rose-500";
-export const ROBOT_EYE_COLOR = "text-yellow-400";
-export const ROBOT_HIT_COLOR = "text-orange-400";
+export const PLAYER_COLOR = "text-lime-400"; // Player's main color
+export const PLAYER_HIT_COLOR = "text-red-500"; // Color when player is hit
+export const ROBOT_COLOR = "text-rose-500"; // Robot's main color
+export const ROBOT_EYE_COLOR = "text-yellow-400"; // Accent for Robot
+export const ROBOT_HIT_COLOR = "text-orange-400"; // Color when robot is hit
 export const ROBOT_DEFEATED_COLOR = "text-slate-400";
 export const SHURIKEN_MAZE_COLOR = "text-sky-300";
 export const KUNAI_MAZE_COLOR = "text-orange-300";
@@ -56,83 +56,80 @@ export const OBJECT_CONFIGS: Record<GameObjectType, GameObjectConfig> = {
     type: GameObjectType.SHURIKEN,
     points: 10,
     isBomb: false,
-    color: SHURIKEN_MAZE_COLOR,
-    size: 28,
+    color: SHURIKEN_MAZE_COLOR, // Used for maze projectiles
+    size: 28, // Slightly smaller for maze
   },
   [GameObjectType.SCROLL]: {
     type: GameObjectType.SCROLL,
     points: 5,
     isBomb: false,
-    color: "text-emerald-400",
+    color: "text-emerald-400", // Classic mode color
     size: 35,
   },
   [GameObjectType.BOMB]: {
     type: GameObjectType.BOMB,
     points: 0,
     isBomb: true,
-    color: "text-red-500",
+    color: "text-red-500", // Classic mode color
     size: 45,
   },
-  [GameObjectType.KUNAI]: {
+  [GameObjectType.KUNAI]: { 
     type: GameObjectType.KUNAI,
-    points: 0,
+    points: 0, 
     isBomb: false,
-    color: KUNAI_MAZE_COLOR,
-    size: 24,
+    color: KUNAI_MAZE_COLOR, // Used for maze projectiles
+    size: 24, 
   },
 };
 
-// Maze grid
-export const MAZE_COLS = 21;
-export const MAZE_ROWS = 15;
-const availableHeightForMaze = GAME_HEIGHT - 80;
-export const CELL_SIZE = Math.min(
-  Math.floor(GAME_WIDTH / MAZE_COLS),
-  Math.floor(availableHeightForMaze / MAZE_ROWS)
-);
+// Maze Escape Mode Constants
+export const MAZE_COLS = 21; 
+export const MAZE_ROWS = 15; 
+const availableHeightForMaze = GAME_HEIGHT - 80; // Adjusted for UI bar at top
+export const CELL_SIZE = Math.min(Math.floor(GAME_WIDTH / MAZE_COLS), Math.floor(availableHeightForMaze / MAZE_ROWS));
 
-// === PLAYER & ROBOT SETTINGS ===
+
 export const PLAYER_INITIAL_HEALTH = 100;
 export const PLAYER_INITIAL_SHURIKENS = 5;
-export const PLAYER_INITIAL_KUNAIS = 15;
+export const PLAYER_INITIAL_KUNAIS = 15; 
 export const PLAYER_SIZE = CELL_SIZE * 0.7;
-export const PLAYER_MOVE_FRAMES = 6;
-export const PLAYER_HIT_FLASH_DURATION = 15;
+export const PLAYER_MOVE_FRAMES = 6; 
+export const PLAYER_HIT_FLASH_DURATION = 15; // frames for hit flash
 
 export const ROBOT_INITIAL_HEALTH = 50;
 export const ROBOT_SIZE = CELL_SIZE * 0.8;
-export const ROBOT_MOVE_FRAMES = 10;
+export const ROBOT_MOVE_FRAMES = 10; 
 export const ROBOT_ATTACK_DAMAGE = 10;
-export const ROBOT_DAMAGE_COOLDOWN_FRAMES = 30;
-export const ROBOT_RESPAWN_DELAY_FRAMES = 300;
-export const ROBOT_MIN_DISTANCE_FROM_PLAYER_START = 5;
-export const ROBOT_HIT_FLASH_DURATION = 10;
+export const ROBOT_DAMAGE_COOLDOWN_FRAMES = 30; // Player invulnerability after robot hit
+export const ROBOT_RESPAWN_DELAY_FRAMES = 300; // 5 seconds at 60fps
+export const ROBOT_MIN_DISTANCE_FROM_PLAYER_START = 5; // grid units
+export const ROBOT_HIT_FLASH_DURATION = 10; // frames for hit flash
 
 export const SHURIKEN_PROJECTILE_SPEED_MAZE = CELL_SIZE / 2.0;
-export const MAX_PROJECTILES_MAZE = 5;
+export const MAX_PROJECTILES_MAZE = 5; 
 export const SHURIKEN_DAMAGE = 30;
 
-export const KUNAI_PROJECTILE_SPEED_MAZE = CELL_SIZE / 1.6;
-export const MAX_KUNAIS_MAZE = 8;
-export const KUNAI_DAMAGE = 15;
-export const KUNAI_GUN_COOLDOWN_FRAMES = 20;
+export const KUNAI_PROJECTILE_SPEED_MAZE = CELL_SIZE / 1.6; 
+export const MAX_KUNAIS_MAZE = 8; 
+export const KUNAI_DAMAGE = 15; 
+export const KUNAI_GUN_COOLDOWN_FRAMES = 20; 
 
-export const BO_ATTACK_DURATION_FRAMES = 12;
+export const BO_ATTACK_DURATION_FRAMES = 12; // Slightly shorter
 export const BO_ATTACK_RANGE_CELLS = 1;
-export const BO_ATTACK_DAMAGE = 35;
+export const BO_ATTACK_DAMAGE = 35; // Slightly stronger
 export const BO_STAFF_COOLDOWN_FRAMES = 40;
 
 export const ROBOT_CONFIGURATIONS = [
-  { health: ROBOT_INITIAL_HEALTH, speedFactor: 1.0 },
-  { health: ROBOT_INITIAL_HEALTH, speedFactor: 1.0 },
-  { health: ROBOT_INITIAL_HEALTH * 1.2, speedFactor: 0.9 },
-  { health: ROBOT_INITIAL_HEALTH * 0.8, speedFactor: 1.1 },
+    { health: ROBOT_INITIAL_HEALTH, speedFactor: 1.0 },
+    { health: ROBOT_INITIAL_HEALTH, speedFactor: 1.0 },
+    { health: ROBOT_INITIAL_HEALTH * 1.2, speedFactor: 0.9 }, 
+    { health: ROBOT_INITIAL_HEALTH * 0.8, speedFactor: 1.1 }, 
 ];
 
-// === CUSTOM SCORES MODE ===
+// Customizable Scores Mode Constants
 export const CUSTOM_SCORES_DURATION_S = 60;
-export const SCORE_ORB_SPAWN_INTERVAL_MS = 600;
-export const SCORE_ORB_LIFESPAN_MS = 5000;
+export const SCORE_ORB_SPAWN_INTERVAL_MS = 600; // Spawn orbs more frequently
+export const SCORE_ORB_LIFESPAN_MS = 5000; // How long an orb stays if not clicked
 export const MAX_SCORE_ORBS_ON_SCREEN = 15;
 
 export const SCORE_ORB_DEFINITIONS: Record<ScoreOrbType, { basePoints: number; color: string; minSize: number; maxSize: number; appearanceWeight: number; floatingSpeed?: number, floatingAmplitude?: number, floatingFrequency?: number }> = {
@@ -141,106 +138,198 @@ export const SCORE_ORB_DEFINITIONS: Record<ScoreOrbType, { basePoints: number; c
   [ScoreOrbType.JACKPOT]: { basePoints: 100, color: "bg-yellow-400", minSize: 50, maxSize: 70, appearanceWeight: 10, floatingSpeed: 0.1, floatingAmplitude: 8, floatingFrequency: 0.02 },
 };
 
-// === VIDEO PLAYER CATALOG ===
-
-  export const VIDEO_CATALOG: VideoInfo[] = [
+// Video Player Mode Constants
+// Video catalog populated with actual video files from public/videos/ directory
+export const VIDEO_CATALOG: VideoInfo[] = [
   // === CONTENIDO OFICIAL NINJAGO ===
-  {
-    id: "ninjago1",
-    title: "LEGO NINJAGO: en busca del auto de Papininja",
-    fileName: "Episodio 93 - LEGO NINJAGO_ Cacería - Temporada 9.mp4",
+  { 
+    id: "ninjago1", 
+    title: "LEGO NINJAGO: Cacería - Temporada 9", 
+    fileName: "Episodio 93 - LEGO NINJAGO_ Cacería - Temporada 9.mp4", 
     path: getAssetPath("/videos/Episodio 93 - LEGO NINJAGO_ Cacería - Temporada 9.mp4"),
     description: "Episodio 93 de la temporada 9 de LEGO NINJAGO"
   },
-  {
-    id: "ninjago2",
-    title: "LEGO® NINJAGO® en Talar de Pacheco",
+  { 
+    id: "ninjago2", 
+    title: "LEGO NINJAGO LA PELÍCULA - Trailer 2", 
     fileName: "LEGO® NINJAGO® LA PELÍCULA - Trailer 2 - Oficial Warner Bros. Pictures.mp4",
     path: getAssetPath("/videos/LEGO® NINJAGO® LA PELÍCULA - Trailer 2 - Oficial Warner Bros. Pictures.mp4"),
     description: "Trailer oficial 2 de la película de LEGO NINJAGO"
   },
-  {
-    id: "ninjago3",
-    title: "Lego Ninjago en Pacheco",
-    fileName: "Lego Ninjago La película 1.mp4",
-    path: getAssetPath("/videos/Lego Ninjago La película 1.mp4"),
+  { 
+    id: "ninjago3", 
+    title: "Lego Ninjago La película", 
+    fileName: "Lego Ninjago La película  1.mp4",
+    path: getAssetPath("/videos/Lego Ninjago La película  1.mp4"),
     description: "Película completa de LEGO NINJAGO"
   },
-  {
-    id: "ninjago4",
-    title: "Los de LEGO MOVIE como Polícias",
+  { 
+    id: "ninjago4", 
+    title: "Los de LEGO MOVIE como Polícias", 
     fileName: "Los de LEGO MOVIE como Polícias.mp4",
     path: getAssetPath("/videos/Los de LEGO MOVIE como Polícias.mp4"),
-    description: "Personajes de LEGO MOVIE actuando como policías"
+    description: "Episodio especial de LEGO MOVIE"
   },
-  {
-    id: "ninjago5",
-    title: "NINJAGO: El Ascenso de los Dragones - Los perdidos",
+  { 
+    id: "ninjago5", 
+    title: "NINJAGO: El Ascenso de los Dragones - Los perdidos", 
     fileName: "Los perdidos 👀 ｜ T3, E1 ｜ Episodio completo ｜ LEGO NINJAGO： El Ascenso de los Dragones.mp4",
     path: getAssetPath("/videos/Los perdidos 👀 ｜ T3, E1 ｜ Episodio completo ｜ LEGO NINJAGO： El Ascenso de los Dragones.mp4"),
-    description: "Episodio completo de 'El Ascenso de los Dragones'"
+    description: "Temporada 3, Episodio 1 - El Ascenso de los Dragones"
   },
-  {
-    id: "main",
-    title: "Video Principal",
+  { 
+    id: "main", 
+    title: "Video Principal", 
     fileName: "videoplayback.mp4",
     path: getAssetPath("/videos/videoplayback.mp4"),
     description: "Video principal del juego"
   },
-
-  // === VIDEOS GENERADOS (ordenados por fecha/hora del nombre) ===
-  {
-    id: "gen_20250620_1345",
-    title: "Generado 20/06/2025 para Papiweb",
+  
+  // === VIDEOS GENERADOS ===
+  { 
+    id: "gen1", 
+    title: "Video Generado 1:45PM", 
     fileName: "Generated File June 20, 2025 - 1_45PM.mp4",
     path: getAssetPath("/videos/Generated File June 20, 2025 - 1_45PM.mp4"),
-    description: "Video generado - 20 de junio de 2025, 13:45"
+    description: "Contenido generado - 20 de Junio 2025"
   },
-  {
-    id: "gen_20250620_1346",
-    title: "Generado 20/06/2025 para Papiweb ",
+  { 
+    id: "gen2", 
+    title: "Video Generado 1:46PM", 
     fileName: "Generated File June 20, 2025 - 1_46PM.mp4",
     path: getAssetPath("/videos/Generated File June 20, 2025 - 1_46PM.mp4"),
-    description: "Video generado - 20 de junio de 2025, 13:46"
+    description: "Contenido generado - 20 de Junio 2025"
   },
-  {
-    id: "gen_20250620_1348",
-    title: "Generado 20/06/2025 para Papiweb",
+  { 
+    id: "gen3", 
+    title: "Video Generado 1:48PM", 
     fileName: "Generated File June 20, 2025 - 1_48PM.mp4",
     path: getAssetPath("/videos/Generated File June 20, 2025 - 1_48PM.mp4"),
-    description: "Video generado - 20 de junio de 2025, 13:48"
+    description: "Contenido generado - 20 de Junio 2025"
   },
-  {
-    id: "gen_20250620_1350",
-    title: "Generado 20/06/2025 para Papiweb",
+  { 
+    id: "gen4", 
+    title: "Video Generado 1:50PM", 
     fileName: "Generated File June 20, 2025 - 1_50PM.mp4",
     path: getAssetPath("/videos/Generated File June 20, 2025 - 1_50PM.mp4"),
-    description: "Video generado - 20 de junio de 2025, 13:50"
+    description: "Contenido generado - 20 de Junio 2025"
   },
-  {
-    id: "gen_20250620_1351",
-    title: "Generado 20/06/2025 para Papiweb",
+  { 
+    id: "gen5", 
+    title: "Video Generado 1:51PM", 
     fileName: "Generated File June 20, 2025 - 1_51PM.mp4",
     path: getAssetPath("/videos/Generated File June 20, 2025 - 1_51PM.mp4"),
-    description: "Video generado - 20 de junio de 2025, 13:51"
+    description: "Contenido generado - 20 de Junio 2025"
   },
-  {
-    id: "gen_20250620_1353",
-    title: "Generado 20/06/2025 para Papiweb",
+  { 
+    id: "gen6", 
+    title: "Video Generado 1:53PM", 
     fileName: "Generated File June 20, 2025 - 1_53PM.mp4",
     path: getAssetPath("/videos/Generated File June 20, 2025 - 1_53PM.mp4"),
-    description: "Video generado - 20 de junio de 2025, 13:53"
+    description: "Contenido generado - 20 de Junio 2025"
   },
-  {
-    id: "gen_20250620_1630",
-    title: "Generado 20/06/2025 para Papiweb",
+  { 
+    id: "gen7", 
+    title: "Video Generado 4:30PM", 
     fileName: "Generated File June 20, 2025 - 4_30PM.mp4",
     path: getAssetPath("/videos/Generated File June 20, 2025 - 4_30PM.mp4"),
-    description: "Video generado Papiweb"
+    description: "Contenido generado - 20 de Junio 2025"
+  },
+  { 
+    id: "gen8", 
+    title: "Video Generado 4:31PM", 
+    fileName: "Generated File June 20, 2025 - 4_31PM.mp4",
+    path: getAssetPath("/videos/Generated File June 20, 2025 - 4_31PM.mp4"),
+    description: "Contenido generado - 20 de Junio 2025"
+  },
+  { 
+    id: "gen9", 
+    title: "Video Generado 4:32PM", 
+    fileName: "Generated File June 20, 2025 - 4_32PM.mp4",
+    path: getAssetPath("/videos/Generated File June 20, 2025 - 4_32PM.mp4"),
+    description: "Contenido generado - 20 de Junio 2025"
+  },
+  { 
+    id: "gen10", 
+    title: "Video Generado 4:34PM", 
+    fileName: "Generated File June 20, 2025 - 4_34PM.mp4",
+    path: getAssetPath("/videos/Generated File June 20, 2025 - 4_34PM.mp4"),
+    description: "Contenido generado - 20 de Junio 2025"
+  },
+  { 
+    id: "gen11", 
+    title: "Video Generado 4:35PM", 
+    fileName: "Generated File June 20, 2025 - 4_35PM.mp4",
+    path: getAssetPath("/videos/Generated File June 20, 2025 - 4_35PM.mp4"),
+    description: "Contenido generado - 20 de Junio 2025"
+  },
+  { 
+    id: "gen12", 
+    title: "Video Generado 5:15PM", 
+    fileName: "Generated File June 20, 2025 - 5_15PM.mp4",
+    path: getAssetPath("/videos/Generated File June 20, 2025 - 5_15PM.mp4"),
+    description: "Contenido generado - 20 de Junio 2025"
+  },
+  { 
+    id: "gen13", 
+    title: "Video Generado 5:18PM", 
+    fileName: "Generated File June 20, 2025 - 5_18PM.mp4",
+    path: getAssetPath("/videos/Generated File June 20, 2025 - 5_18PM.mp4"),
+    description: "Contenido generado - 20 de Junio 2025"
+  },
+  { 
+    id: "gen14", 
+    title: "Video Generado 5:19PM", 
+    fileName: "Generated File June 20, 2025 - 5_19PM.mp4",
+    path: getAssetPath("/videos/Generated File June 20, 2025 - 5_19PM.mp4"),
+    description: "Contenido generado - 20 de Junio 2025"
+  },
+  { 
+    id: "gen15", 
+    title: "Video Generado 5:22PM", 
+    fileName: "Generated File June 20, 2025 - 5_22PM.mp4",
+    path: getAssetPath("/videos/Generated File June 20, 2025 - 5_22PM.mp4"),
+    description: "Contenido generado - 20 de Junio 2025"
+  },
+  { 
+    id: "gen16", 
+    title: "Video Generado 5:23PM", 
+    fileName: "Generated File June 20, 2025 - 5_23PM.mp4",
+    path: getAssetPath("/videos/Generated File June 20, 2025 - 5_23PM.mp4"),
+    description: "Contenido generado - 20 de Junio 2025"
+  },
+  { 
+    id: "gen17", 
+    title: "Video Generado 5:28PM", 
+    fileName: "Generated File June 20, 2025 - 5_28PM.mp4",
+    path: getAssetPath("/videos/Generated File June 20, 2025 - 5_28PM.mp4"),
+    description: "Contenido generado - 20 de Junio 2025"
+  },
+  { 
+    id: "gen18", 
+    title: "Video Generado 5:29PM", 
+    fileName: "Generated File June 20, 2025 - 5_29PM.mp4",
+    path: getAssetPath("/videos/Generated File June 20, 2025 - 5_29PM.mp4"),
+    description: "Contenido generado - 20 de Junio 2025"
+  },
+  { 
+    id: "gen19", 
+    title: "Video Generado 5:31PM", 
+    fileName: "Generated File June 20, 2025 - 5_31PM.mp4",
+    path: getAssetPath("/videos/Generated File June 20, 2025 - 5_31PM.mp4"),
+    description: "Contenido generado - 20 de Junio 2025"
+  },
+  { 
+    id: "gen20", 
+    title: "Video Generado 5:32PM", 
+    fileName: "Generated File June 20, 2025 - 5_32PM.mp4",
+    path: getAssetPath("/videos/Generated File June 20, 2025 - 5_32PM.mp4"),
+    description: "Contenido generado - 20 de Junio 2025"
   }
 ];
 
-// === SOUND FILES ===
+
+// Sound File Paths (usando solo archivos que existen)
 export const SOUND_FILES: Record<SoundEffect, string> = {
   [SoundEffect.PLAYER_SHURIKEN_THROW]: getAssetPath('/sounds/lasergun-152375.mp3'),
   [SoundEffect.PLAYER_KUNAI_THROW]: getAssetPath('/sounds/lasergun-152375.mp3'),
@@ -257,33 +346,14 @@ export const SOUND_FILES: Record<SoundEffect, string> = {
   [SoundEffect.UI_CLICK_GENERAL]: getAssetPath('/sounds/ui_click.mp3'),
   [SoundEffect.BACKGROUND_MAZE_MUSIC]: getAssetPath('/sounds/NINJAGO La Senda del Ninja Papiweb.mp3'),
   [SoundEffect.BACKGROUND_NINJAGO_THEME]: getAssetPath('/sounds/NINJAGO La Senda del Ninja Papiweb.mp3'),
-  [SoundEffect.BACKGROUND_WEEKEND_WHIP]: getAssetPath('/sounds/THE WEEKEND WHIP Intro en Español NINJAGO Papiweb.mp3'),
-  [SoundEffect.SCORE_ORB_COLLECT]: getAssetPath('/sounds/ui_click.mp3'),
+  [SoundEffect.BACKGROUND_WEEKEND_WHIP]: getAssetPath('/sounds/THE WEEKEND WHIP Intro en Español NINJAGO Papiweb.mp3'), 
+  [SoundEffect.SCORE_ORB_COLLECT]: getAssetPath('/sounds/ui_click.mp3'), // Cambiado a un archivo que existe
 };
 
-// === ICON COMPONENTS (SVGs) ===
+// SVG Icons
 export const ShurikenIcon: React.FC<{ size?: number; className?: string; style?: React.CSSProperties }> = ({ size = OBJECT_CONFIGS[GameObjectType.SHURIKEN].size, className, style }) => (
   <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="currentColor" className={className} style={style}>
     <path d="M12 2l2.121 5.879L20 12l-5.879 2.121L12 20l-2.121-5.879L4 12l5.879-2.121L12 2zm0 3.828L10.586 9H7.172l2.414 2.414L8.172 14.828 12 13l3.828 1.828L14.414 11.414 16.828 9h-3.414L12 5.828zM12 10a2 2 0 100 4 2 2 0 000-4z"/>
-  </svg>
-);
-
-export const TargetIcon: React.FC<{ size?: number; className?: string; style?: React.CSSProperties }> = ({ size = 40, className, style }) => (
-  <svg
-    width={size}
-    height={size}
-    viewBox="0 0 24 24"
-    fill="none"
-    className={className}
-    style={style}
-  >
-    <circle cx="12" cy="12" r="10" stroke="red" strokeWidth="2" fill="none" />
-    <circle cx="12" cy="12" r="6" stroke="red" strokeWidth="2" fill="none" />
-    <circle cx="12" cy="12" r="2" fill="red" />
-    <line x1="12" y1="2" x2="12" y2="6" stroke="red" strokeWidth="2"/>
-    <line x1="12" y1="18" x2="12" y2="22" stroke="red" strokeWidth="2"/>
-    <line x1="2" y1="12" x2="6" y2="12" stroke="red" strokeWidth="2"/>
-    <line x1="18" y1="12" x2="22" y2="12" stroke="red" strokeWidth="2"/>
   </svg>
 );
 
@@ -292,6 +362,7 @@ export const KunaiIcon: React.FC<{ size?: number; className?: string; style?: Re
     <path d="M17.657 3.222a2 2 0 00-2.828 0L3.364 14.687a1 1 0 000 1.414l4.242 4.242a1 1 0 001.414 0l11.465-11.464a2 2 0 000-2.828L17.657 3.222zM8.464 18.243L5.414 15.192l8.486-8.485 3.05 3.05-8.486 8.486zM18 8a1 1 0 11-2 0 1 1 0 012 0z"/>
   </svg>
 );
+
 
 export const ScrollIcon: React.FC<{ size?: number; className?: string }> = ({ size = OBJECT_CONFIGS[GameObjectType.SCROLL].size, className }) => (
   <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="currentColor" className={className}>
@@ -308,12 +379,14 @@ export const BombIcon: React.FC<{ size?: number; className?: string }> = ({ size
   </svg>
 );
 
-export const OBJECT_ICONS: Record<GameObjectType, React.FC<{size?: number; className?: string}>> = {
-  [GameObjectType.SHURIKEN]: ShurikenIcon,
-  [GameObjectType.SCROLL]: ScrollIcon,
-  [GameObjectType.BOMB]: BombIcon,
-  [GameObjectType.KUNAI]: KunaiIcon,
-};
+export const TargetIcon: React.FC<{ size?: number; className?: string; color?: string }> = ({ size = 40, className, color = "fill-red-500" }) => (
+  <svg width={size} height={size} viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" className={className}>
+    <circle cx="50" cy="50" r="48" className={`${color} opacity-70`} stroke="rgba(255,255,255,0.5)" strokeWidth="2"/>
+    <circle cx="50" cy="50" r="35" fill="white" className="opacity-80"/>
+    <circle cx="50" cy="50" r="22" className={`${color} opacity-90`} />
+    <circle cx="50" cy="50" r="10" fill="white" />
+  </svg>
+);
 
 export const PlayerNinjaIcon: React.FC<{ size?: number; className?: string; style?: React.CSSProperties; isHit?: boolean }> = ({ size = PLAYER_SIZE, className, style, isHit}) => (
   <div 
@@ -331,6 +404,7 @@ export const PlayerNinjaIcon: React.FC<{ size?: number; className?: string; styl
 
 export const RobotEnemyIcon: React.FC<{ size?: number; className?: string; style?: React.CSSProperties; isHit?: boolean; isDefeated?: boolean }> = ({ size = ROBOT_SIZE, className, style, isHit, isDefeated }) => {
   const filterEffect = isDefeated ? 'grayscale(100%) brightness(0.5)' : (isHit ? 'brightness(150%) contrast(120%) hue-rotate(90deg)' : 'none');
+  
   return (
     <div 
       className={`${className} transition-all duration-100 rounded-full overflow-hidden border-2 ${
@@ -358,11 +432,13 @@ export const ExitDoorIcon: React.FC<{ size?: number; className?: string }> = ({ 
   </svg>
 );
 
+
 export const BoStaffIcon: React.FC<{ size?: number; className?: string; style?: React.CSSProperties; direction: Direction }> = ({size = CELL_SIZE * 0.9, className, style, direction}) => {
   let pathData = "M4 12 L20 12"; 
   if (direction === Direction.UP || direction === Direction.DOWN) {
     pathData = "M12 4 L12 20"; 
   }
+  
   return (
     <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" 
       fill="none" 
@@ -384,17 +460,24 @@ export const BoStaffIcon: React.FC<{ size?: number; className?: string; style?: 
   );
 };
 
-// UI/Audio/Video/Fullscreen/Star/Replay/Back-to-list icons
+
+export const OBJECT_ICONS: Record<GameObjectType, React.FC<{size?: number; className?: string}>> = {
+  [GameObjectType.SHURIKEN]: ShurikenIcon,
+  [GameObjectType.SCROLL]: ScrollIcon,
+  [GameObjectType.BOMB]: BombIcon,
+  [GameObjectType.KUNAI]: KunaiIcon,
+};
+
 export const SoundOnIcon: React.FC<{ size?: number; className?: string }> = ({ size = 24, className }) => (
-  <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="currentColor" className={className}>
-    <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
-  </svg>
+    <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="currentColor" className={className}>
+        <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
+    </svg>
 );
 
 export const SoundOffIcon: React.FC<{ size?: number; className?: string }> = ({ size = 24, className }) => (
-  <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="currentColor" className={className}>
-    <path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L7 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3z"/>
-  </svg>
+    <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="currentColor" className={className}>
+        <path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L7 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3z"/>
+    </svg>
 );
 
 export const StarIcon: React.FC<{ size?: number; className?: string }> = ({ size = 24, className }) => (
@@ -427,17 +510,15 @@ export const VolumeOffIcon: React.FC<{ size?: number; className?: string }> = ({
 );
 
 export const FullscreenEnterIcon: React.FC<{ size?: number; className?: string }> = ({ size = 24, className }) => (
-  <svg xmlns="http://www.w3.org/2000/svg" height={size} viewBox="0 0 24 24" width={size} fill="currentColor" className={className}><path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/></svg>
+  <svg xmlns="http://www.w3.org/2000/svg" height={size} viewBox="0 0 24 24" width={size} fill="currentColor" className={className}><path d="M0 0h24v24H0V0z" fill="none"/><path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/></svg>
 );
 
 export const FullscreenExitIcon: React.FC<{ size?: number; className?: string }> = ({ size = 24, className }) => (
-  <svg xmlns="http://www.w3.org/2000/svg" height={size} viewBox="0 0 24 24" width={size} fill="currentColor" className={className}><path d="M5 16h3v3h2v-5H5v2zm3-8H5v2h5V5H8v3zm6 11h2v-3h3v-2h-5v5zm2-11V5h-2v5h5V8h-3z"/></svg>
+  <svg xmlns="http://www.w3.org/2000/svg" height={size} viewBox="0 0 24 24" width={size} fill="currentColor" className={className}><path d="M0 0h24v24H0V0z" fill="none"/><path d="M5 16h3v3h2v-5H5v2zm3-8H5v2h5V5H8v3zm6 11h2v-3h3v-2h-5v5zm2-11V5h-2v5h5V8h-3z"/></svg>
 );
-
 export const VideoReplayIcon: React.FC<{ size?: number; className?: string }> = ({ size = 24, className }) => (
   <svg xmlns="http://www.w3.org/2000/svg" height={size} viewBox="0 0 24 24" width={size} fill="currentColor" className={className}><path d="M0 0h24v24H0z" fill="none"/><path d="M12 5V1L7 6l5 5V7c3.31 0 6 2.69 6 6s-2.69 6-6 6-6-2.69-6-6H4c0 4.42 3.58 8 8 8s8-3.58 8-8-3.58-8-8-8z"/></svg>
 );
-
 export const BackToListIcon: React.FC<{ size?: number; className?: string }> = ({ size = 24, className }) => (
   <svg xmlns="http://www.w3.org/2000/svg" height={size} viewBox="0 0 24 24" width={size} fill="currentColor" className={className}><path d="M0 0h24v24H0V0z" fill="none"/><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
 );
