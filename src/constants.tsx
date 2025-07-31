@@ -142,26 +142,26 @@ export const SCORE_ORB_DEFINITIONS: Record<ScoreOrbType, { basePoints: number; c
 };
 
 // === VIDEO PLAYER CATALOG ===
-export const VIDEO_CATALOG: VideoInfo[] = [
+
   export const VIDEO_CATALOG: VideoInfo[] = [
   // === CONTENIDO OFICIAL NINJAGO ===
   {
     id: "ninjago1",
-    title: "LEGO NINJAGO: Cacería - Temporada 9",
+    title: "LEGO NINJAGO: en busca del auto de Papininja",
     fileName: "Episodio 93 - LEGO NINJAGO_ Cacería - Temporada 9.mp4",
     path: getAssetPath("/videos/Episodio 93 - LEGO NINJAGO_ Cacería - Temporada 9.mp4"),
     description: "Episodio 93 de la temporada 9 de LEGO NINJAGO"
   },
   {
     id: "ninjago2",
-    title: "LEGO® NINJAGO® LA PELÍCULA - Trailer 2",
+    title: "LEGO® NINJAGO® en Talar de Pacheco",
     fileName: "LEGO® NINJAGO® LA PELÍCULA - Trailer 2 - Oficial Warner Bros. Pictures.mp4",
     path: getAssetPath("/videos/LEGO® NINJAGO® LA PELÍCULA - Trailer 2 - Oficial Warner Bros. Pictures.mp4"),
     description: "Trailer oficial 2 de la película de LEGO NINJAGO"
   },
   {
     id: "ninjago3",
-    title: "Lego Ninjago La película",
+    title: "Lego Ninjago en Pacheco",
     fileName: "Lego Ninjago La película 1.mp4",
     path: getAssetPath("/videos/Lego Ninjago La película 1.mp4"),
     description: "Película completa de LEGO NINJAGO"
@@ -191,49 +191,49 @@ export const VIDEO_CATALOG: VideoInfo[] = [
   // === VIDEOS GENERADOS (ordenados por fecha/hora del nombre) ===
   {
     id: "gen_20250620_1345",
-    title: "Generado 20/06/2025 13:45",
+    title: "Generado 20/06/2025 para Papiweb",
     fileName: "Generated File June 20, 2025 - 1_45PM.mp4",
     path: getAssetPath("/videos/Generated File June 20, 2025 - 1_45PM.mp4"),
     description: "Video generado - 20 de junio de 2025, 13:45"
   },
   {
     id: "gen_20250620_1346",
-    title: "Generado 20/06/2025 13:46",
+    title: "Generado 20/06/2025 para Papiweb ",
     fileName: "Generated File June 20, 2025 - 1_46PM.mp4",
     path: getAssetPath("/videos/Generated File June 20, 2025 - 1_46PM.mp4"),
     description: "Video generado - 20 de junio de 2025, 13:46"
   },
   {
     id: "gen_20250620_1348",
-    title: "Generado 20/06/2025 13:48",
+    title: "Generado 20/06/2025 para Papiweb",
     fileName: "Generated File June 20, 2025 - 1_48PM.mp4",
     path: getAssetPath("/videos/Generated File June 20, 2025 - 1_48PM.mp4"),
     description: "Video generado - 20 de junio de 2025, 13:48"
   },
   {
     id: "gen_20250620_1350",
-    title: "Generado 20/06/2025 13:50",
+    title: "Generado 20/06/2025 para Papiweb",
     fileName: "Generated File June 20, 2025 - 1_50PM.mp4",
     path: getAssetPath("/videos/Generated File June 20, 2025 - 1_50PM.mp4"),
     description: "Video generado - 20 de junio de 2025, 13:50"
   },
   {
     id: "gen_20250620_1351",
-    title: "Generado 20/06/2025 13:51",
+    title: "Generado 20/06/2025 para Papiweb",
     fileName: "Generated File June 20, 2025 - 1_51PM.mp4",
     path: getAssetPath("/videos/Generated File June 20, 2025 - 1_51PM.mp4"),
     description: "Video generado - 20 de junio de 2025, 13:51"
   },
   {
     id: "gen_20250620_1353",
-    title: "Generado 20/06/2025 13:53",
+    title: "Generado 20/06/2025 para Papiweb",
     fileName: "Generated File June 20, 2025 - 1_53PM.mp4",
     path: getAssetPath("/videos/Generated File June 20, 2025 - 1_53PM.mp4"),
     description: "Video generado - 20 de junio de 2025, 13:53"
   },
   {
     id: "gen_20250620_1630",
-    title: "Generado 20/06/2025 16:30",
+    title: "Generado 20/06/2025 para Papiweb",
     fileName: "Generated File June 20, 2025 - 4_30PM.mp4",
     path: getAssetPath("/videos/Generated File June 20, 2025 - 4_30PM.mp4"),
     description: "Video generado](#)
