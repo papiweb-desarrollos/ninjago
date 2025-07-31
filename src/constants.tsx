@@ -236,8 +236,8 @@ export const SCORE_ORB_DEFINITIONS: Record<ScoreOrbType, { basePoints: number; c
     title: "Generado 20/06/2025 para Papiweb",
     fileName: "Generated File June 20, 2025 - 4_30PM.mp4",
     path: getAssetPath("/videos/Generated File June 20, 2025 - 4_30PM.mp4"),
-    description: "Video generado](#)
-
+    description: "Video generado Papiweb"
+  }
 ];
 
 // === SOUND FILES ===
