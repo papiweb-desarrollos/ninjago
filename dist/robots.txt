@@ -1,0 +1,29 @@
+# robots.txt para Ninjago Arcade Game
+# Permitir a todos los bots indexar el sitio
+
+User-agent: *
+Allow: /
+
+# Permitir específicamente a Googlebot
+User-agent: Googlebot
+Allow: /
+
+# Sitemap
+Sitemap: https://ninjago-arcade.netlify.app/sitemap.xml
+
+# Archivos y directorios que no queremos indexar
+Disallow: /node_modules/
+Disallow: /src/
+Disallow: /*.json
+Disallow: /*.config.js
+Disallow: /*.config.ts
+
+# Permitir archivos importantes para SEO
+Allow: /favicon.ico
+Allow: /site.webmanifest
+Allow: /pictures/
+Allow: /sounds/
+Allow: /videos/
+
+# Crawl-delay opcional (en segundos)
+Crawl-delay: 1

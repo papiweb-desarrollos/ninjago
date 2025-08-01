@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <!-- Fondo circular -->
+  <circle cx="32" cy="32" r="30" fill="#1e40af" stroke="#60a5fa" stroke-width="2"/>
+  
+  <!-- Shuriken ninja -->
+  <g transform="translate(32,32)">
+    <!-- Centro -->
+    <circle cx="0" cy="0" r="4" fill="#facc15"/>
+    
+    <!-- Puntas del shuriken -->
+    <g stroke="#f8fafc" stroke-width="1" fill="#e2e8f0">
+      <!-- Punta superior -->
+      <path d="M0,-12 L-3,-6 L3,-6 Z"/>
+      <!-- Punta derecha -->
+      <path d="M12,0 L6,-3 L6,3 Z"/>
+      <!-- Punta inferior -->
+      <path d="M0,12 L-3,6 L3,6 Z"/>
+      <!-- Punta izquierda -->
+      <path d="M-12,0 L-6,-3 L-6,3 Z"/>
+    </g>
+    
+    <!-- Detalles decorativos -->
+    <g stroke="#60a5fa" stroke-width="0.5" fill="none">
+      <circle cx="0" cy="0" r="8"/>
+      <circle cx="0" cy="0" r="14"/>
+    </g>
+  </g>
+  
+  <!-- Texto decorativo (opcional) -->
+  <text x="32" y="52" text-anchor="middle" font-family="Arial, sans-serif" font-size="8" fill="#f1f5f9" font-weight="bold">NINJA</text>
+</svg>

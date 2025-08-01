@@ -26,6 +26,35 @@ export interface FlyingObjectState {
   isProjectile?: boolean; 
 }
 
+// Dragon Ship Types (Classic Slicing Mode)
+export interface DragonShipState {
+  id: string;
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+  rotation: number;
+}
+
+export interface DragonFireState {
+  id: string;
+  x: number;
+  y: number;
+  vx: number;
+  vy: number;
+  size: number;
+  createdAt: number;
+}
+
+// Explosion Effects Types
+export interface ExplosionState {
+  id: string;
+  x: number;
+  y: number;
+  type: 'fire' | 'bomb' | 'impact';
+  createdAt: number;
+}
+
 export enum GameStatus {
   StartMenu,
   Playing,

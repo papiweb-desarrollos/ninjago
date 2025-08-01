@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ninjago Arcade Game - Juego Gratis Online | Classic Slicing, Target Practice y Más</title>
+  
+  <!-- Favicon y iconos -->
+  <link rel="icon" type="image/x-icon" href="./favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="./favicons/ninja-favicon-16.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="./favicons/ninja-favicon-32.png">
+  <link rel="icon" type="image/png" sizes="48x48" href="./favicons/ninja-favicon-48.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="./favicons/apple-touch-icon.png">
+  <!-- Manifest PWA -->
+  <link rel="manifest" href="/ninjago/assets/site-z3fikjx-.webmanifest">
+  
+  <!-- Meta tags para PWA -->
+  <meta name="theme-color" content="#1e40af">
+  <meta name="description" content="Juego de acción Ninjago gratis online - Múltiples modos: Classic Slicing, Target Practice, Maze Escape, Score Rush y Video Player. ¡Juega ahora!">
+  <meta name="keywords" content="ninjago, juego gratis, acción, arcade, ninja, lego, online, classic slicing, target practice, maze escape, score rush, videojuego, browser game, html5 game">
+  <meta name="author" content="Papiweb Desarrollos">
+  <meta name="robots" content="index, follow">
+  <meta name="language" content="Spanish">
+  <meta name="revisit-after" content="7 days">
+  <meta name="rating" content="general">
+  
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://papiweb-desarrollos.github.io/ninjago">
+  <meta property="og:title" content="Ninjago Arcade Game - Juego Gratis Online">
+  <meta property="og:description" content="Juega al mejor juego de Ninjago online gratis. Múltiples modos de juego: Classic Slicing, Target Practice, Maze Escape y más. ¡Diversión garantizada!">
+  <meta property="og:image" content="./favicons/android-chrome-512.png">
+  <meta property="og:site_name" content="Ninjago Arcade Game">
+  <meta property="og:locale" content="es_ES">
+  
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:url" content="https://papiweb-desarrollos.github.io/ninjago">
+  <meta property="twitter:title" content="Ninjago Arcade Game - Juego Gratis Online">
+  <meta property="twitter:description" content="Juega al mejor juego de Ninjago online gratis. Múltiples modos: Classic Slicing, Target Practice, Maze Escape y más.">
+  <meta property="twitter:image" content="./favicons/android-chrome-512.png">
+  <meta property="twitter:creator" content="@papiweb_dev">
+  
+  <!-- Datos estructurados JSON-LD para SEO -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "VideoGame",
+    "name": "Ninjago Arcade Game",
+    "description": "Juego de acción Ninjago gratis online con múltiples modos de juego: Classic Slicing, Target Practice, Maze Escape, Score Rush y Video Player. ¡Diversión garantizada!",
+    "url": "https://ninjago-arcade.netlify.app",
+    "image": "./favicons/android-chrome-512.png",
+    "genre": ["Action", "Arcade", "Adventure"],
+    "gamePlatform": ["Web Browser", "HTML5"],
+    "operatingSystem": ["Any"],
+    "applicationCategory": "Game",
+    "inLanguage": "es",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD",
+      "availability": "https://schema.org/InStock"
+    },
+    "author": {
+      "@type": "Organization",
+      "name": "Papiweb Desarrollos",
+      "url": "https://papiweb.com"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Papiweb Desarrollos",
+      "url": "https://papiweb.com"
+    },
+    "datePublished": "2025-06-21",
+    "dateModified": "2025-06-21",
+    "gameItem": [
+      {
+        "@type": "Thing",
+        "name": "Classic Slicing Mode"
+      },
+      {
+        "@type": "Thing", 
+        "name": "Target Practice Mode"
+      },
+      {
+        "@type": "Thing",
+        "name": "Maze Escape Mode"
+      },
+      {
+        "@type": "Thing",
+        "name": "Score Rush Mode"
+      },
+      {
+        "@type": "Thing",
+        "name": "Video Player Mode"
+      }
+    ],
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": "4.8",
+      "reviewCount": "150",
+      "bestRating": "5",
+      "worstRating": "1"
+    }
+  }
+  </script>
+  
+  <style>
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+        'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+        sans-serif;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      overscroll-behavior: none; /* Prevent pull-to-refresh on mobile */
+    }
+    #root {
+      width: 100vw;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden; /* Prevent horizontal scrollbars */
+    }
+    .wall-cell-static { /* Example for direct CSS gradient if Tailwind is tricky */
+        background: linear-gradient(to bottom right, #4A5568, #2D3748); /* slate-600 to slate-800 approx */
+        border-color: #1A202C; /* slate-900 approx */
+    }
+    .path-cell-static {
+        background-color: #718096; /* slate-500 approx */
+        border-color: #4A5568; /* slate-600 approx */
+    }
+
+    @keyframes playerHitFlashAnimation {
+      0%, 100% { filter: brightness(1); }
+      50% { filter: brightness(1.5) contrast(1.2) saturate(1.5); }
+    }
+    .player-hit-flash-effect {
+        animation: playerHitFlashAnimation 0.1s linear 3; /* Flash 3 times quickly */
+    }
+
+    @keyframes shimmerEffect {
+      0% { background-position: -200% 0; }
+      100% { background-position: 200% 0; }
+    }
+    .footer-shimmer {
+      position: relative;
+      overflow: hidden;
+    }
+    .footer-shimmer::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(
+        to right,
+        transparent 0%,
+        rgba(255, 255, 255, 0.2) 50%,
+        transparent 100%
+      );
+      background-size: 200% 100%;
+      animation: shimmerEffect 3s infinite linear;
+      pointer-events: none; /* Ensure it doesn't block interactions */
+    }
+
+    /* Header/Footer Enhancement */
+    .brand-glow {
+      text-shadow: 0 0 10px rgba(56, 189, 248, 0.5);
+    }
+    
+    .game-status-indicator {
+      animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+    }
+
+    /* Coffee cup steam animation */
+    @keyframes steam {
+      0% { opacity: 0.7; transform: translateY(0px) scaleX(1); }
+      50% { opacity: 1; transform: translateY(-10px) scaleX(1.1); }
+      100% { opacity: 0.7; transform: translateY(0px) scaleX(1); }
+    }
+
+    .coffee-steam {
+      animation: steam 2s ease-in-out infinite;
+    }
+
+    /* Papiweb link hover effects */
+    .papiweb-link {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .papiweb-link::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(251, 146, 60, 0.2),
+        transparent
+      );
+      transition: left 0.5s;
+    }
+
+    .papiweb-link:hover::before {
+      left: 100%;
+    }
+
+    /* Responsive design for smaller screens */
+    @media (max-width: 640px) {
+      .header-title {
+        font-size: 1.5rem;
+      }
+      .footer-content {
+        text-align: center;
+      }
+      .papiweb-link {
+        justify-content: center;
+      }
+    }
+
+    /* Game container responsive behavior */
+    .main-container {
+      min-height: 0; /* Allow flexbox to shrink */
+      height: calc(100vh - 140px); /* Account for header and footer */
+      width: 100%;
+    }
+    
+    @media (max-height: 900px) {
+      .main-container {
+        padding: 1rem;
+        height: calc(100vh - 120px);
+      }
+    }
+
+    @media (max-height: 700px) {
+      .main-container {
+        padding: 0.5rem;
+        height: calc(100vh - 100px);
+      }
+      .header-title {
+        font-size: 1.25rem;
+      }
+    }
+
+    @media (max-width: 1280px) {
+      .main-container {
+        padding: 1rem;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .main-container {
+        padding: 0.5rem;
+      }
+      .header-title {
+        font-size: 1.5rem;
+      }
+    }
+
+    /* Ensure header stays visible */
+    header {
+      position: relative;
+      z-index: 1000;
+      flex-shrink: 0;
+    }
+
+    /* Game container should never overlap header */
+    main {
+      position: relative;
+      z-index: 1;
+    }
+
+  </style>
+
+<script type="importmap">
+{
+  "imports": {
+    "react": "https://esm.sh/react@^19.1.0",
+    "react/": "https://esm.sh/react@^19.1.0/",
+    "react-dom/": "https://esm.sh/react-dom@^19.1.0/"
+  }
+}
+</script>
+  <script type="module" crossorigin src="/ninjago/assets/index-Boe1fEhB.js"></script>
+  <link rel="stylesheet" crossorigin href="/ninjago/assets/index-BFo42ntv.css">
+</head>
+<body class="app-body">
+  <noscript>You need to enable JavaScript to run this app.</noscript>
+  <div id="root"></div>
+</body>
+</html>

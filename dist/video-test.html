@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test de Videos - Ninjago</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #1e293b;
+            color: white;
+        }
+        .video-item {
+            margin: 10px 0;
+            padding: 10px;
+            border: 1px solid #475569;
+            border-radius: 5px;
+            background-color: #334155;
+        }
+        .status {
+            padding: 5px;
+            border-radius: 3px;
+            font-weight: bold;
+        }
+        .success { background-color: #10b981; }
+        .error { background-color: #ef4444; }
+        .loading { background-color: #f59e0b; }
+        video {
+            width: 320px;
+            height: 180px;
+            margin: 10px 0;
+        }
+        .info {
+            font-size: 12px;
+            color: #94a3b8;
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>🎬 Test de Rutas de Videos - Ninjago</h1>
+    <p>Esta página verifica si los videos se pueden cargar correctamente.</p>
+    
+    <div id="environment-info">
+        <h2>📊 Información del Entorno</h2>
+        <div class="info">
+            <strong>Modo:</strong> <span id="mode">-</span><br>
+            <strong>Base URL:</strong> <span id="baseUrl">-</span><br>
+            <strong>Ruta actual:</strong> <span id="currentPath">-</span>
+        </div>
+    </div>
+
+    <div id="videos-container">
+        <h2>🎥 Videos de Prueba</h2>
+    </div>
+
+    <script>
+        // Simular la función getAssetPath de constants.tsx
+        function getAssetPath(path) {
+            // Determinar si estamos en producción basado en la URL
+            const isProduction = window.location.hostname === 'papiweb-desarrollos.github.io';
+            const basePath = isProduction ? '/ninjago' : '';
+            return basePath + path;
+        }
+
+        // Lista de videos para probar (algunos de los principales)
+        const testVideos = [
+            {
+                id: "main",
+                title: "Video Principal",
+                fileName: "videoplayback.mp4",
+                path: getAssetPath("/videos/videoplayback.mp4")
+            },
+            {
+                id: "ninjago1",
+                title: "LEGO NINJAGO: Cacería - Temporada 9",
+                fileName: "Episodio 93 - LEGO NINJAGO_ Cacería - Temporada 9.mp4",
+                path: getAssetPath("/videos/Episodio 93 - LEGO NINJAGO_ Cacería - Temporada 9.mp4")
+            },
+            {
+                id: "ninjago3",
+                title: "Lego Ninjago La película",
+                fileName: "Lego Ninjago La película  1.mp4",
+                path: getAssetPath("/videos/Lego Ninjago La película  1.mp4")
+            }
+        ];
+
+        // Mostrar información del entorno
+        document.getElementById('mode').textContent = window.location.hostname === 'papiweb-desarrollos.github.io' ? 'production' : 'development';
+        document.getElementById('baseUrl').textContent = window.location.origin;
+        document.getElementById('currentPath').textContent = window.location.pathname;
+
+        // Crear elementos de prueba para cada video
+        const container = document.getElementById('videos-container');
+        
+        testVideos.forEach(video => {
+            const videoDiv = document.createElement('div');
+            videoDiv.className = 'video-item';
+            videoDiv.innerHTML = `
+                <h3>${video.title}</h3>
+                <div class="info">
+                    <strong>Archivo:</strong> ${video.fileName}<br>
+                    <strong>Ruta generada:</strong> ${video.path}<br>
+                    <strong>URL completa:</strong> ${window.location.origin}${video.path}
+                </div>
+                <div class="status loading" id="status-${video.id}">⏳ Cargando...</div>
+                <video 
+                    id="video-${video.id}" 
+                    controls 
+                    preload="metadata"
+                    onloadeddata="videoLoaded('${video.id}')"
+                    onerror="videoError('${video.id}')"
+                >
+                    <source src="${video.path}" type="video/mp4">
+                    Tu navegador no soporta video HTML5.
+                </video>
+            `;
+            container.appendChild(videoDiv);
+        });
+
+        // Funciones de callback para los videos
+        function videoLoaded(videoId) {
+            const status = document.getElementById(`status-${videoId}`);
+            status.className = 'status success';
+            status.textContent = '✅ Video cargado correctamente';
+        }
+
+        function videoError(videoId) {
+            const status = document.getElementById(`status-${videoId}`);
+            const video = document.getElementById(`video-${videoId}`);
+            status.className = 'status error';
+            
+            let errorMsg = '❌ Error al cargar el video';
+            if (video.error) {
+                switch (video.error.code) {
+                    case video.error.MEDIA_ERR_ABORTED:
+                        errorMsg += ' - Reproducción abortada';
+                        break;
+                    case video.error.MEDIA_ERR_NETWORK:
+                        errorMsg += ' - Error de red (archivo no encontrado)';
+                        break;
+                    case video.error.MEDIA_ERR_DECODE:
+                        errorMsg += ' - Error de decodificación';
+                        break;
+                    case video.error.MEDIA_ERR_SRC_NOT_SUPPORTED:
+                        errorMsg += ' - Formato no soportado o archivo no encontrado';
+                        break;
+                    default:
+                        errorMsg += ' - Error desconocido';
+                }
+            }
+            status.textContent = errorMsg;
+        }
+
+        // Verificar conectividad básica
+        setTimeout(() => {
+            testVideos.forEach(video => {
+                fetch(video.path, { method: 'HEAD' })
+                    .then(response => {
+                        if (response.ok) {
+                            console.log(`✅ ${video.title} - HTTP ${response.status}`);
+                        } else {
+                            console.error(`❌ ${video.title} - HTTP ${response.status}`);
+                        }
+                    })
+                    .catch(error => {
+                        console.error(`❌ ${video.title} - Error de red:`, error);
+                    });
+            });
+        }, 1000);
+    </script>
+</body>
+</html>

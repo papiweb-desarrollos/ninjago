@@ -61,6 +61,7 @@ const App: React.FC = () => {
     setGameStatus(GameStatus.VideoPlayer);
   }, []);
 
+
   const handleGameOver = useCallback((score: number) => {
     // VideoPlayer mode doesn't produce a score for game over screen.
     // So, only set finalScore if it's not from VideoPlayer.
@@ -148,7 +149,7 @@ const App: React.FC = () => {
 
         {/* Header/Branding - Fixed position with high z-index */}
       <header className="relative z-50 bg-slate-800 border-b-4 border-sky-500 shadow-lg flex-shrink-0">
-        <div className="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
+        <div className="max-w-6xl mx-auto px-3 py-2 flex items-center justify-between">  {/* Reducido padding */}
           <div className="flex items-center space-x-3">
             <div className="w-10 h-10 bg-gradient-to-br from-sky-400 to-indigo-600 rounded-lg flex items-center justify-center shadow-lg">
               <span className="text-white font-bold text-xl">🥷</span>
@@ -184,16 +185,16 @@ const App: React.FC = () => {
       </header>
 
       {/* Main Game Container - Responsive and constrained */}
-      <main className="flex-1 flex items-center justify-center p-4 main-container overflow-hidden min-h-0">
+      <main className="flex-1 flex items-center justify-center main-container overflow-hidden min-h-0">
         <div 
-          className="rounded-xl overflow-hidden shadow-2xl border-4 border-slate-800 bg-slate-900 transform transition-transform hover:scale-101 duration-300 w-full h-full"
+          className="rounded-xl overflow-hidden shadow-2xl border-4 border-slate-800 bg-slate-900 transform transition-transform hover:scale-101 duration-300 game-container-large game-focus-enhanced"
           style={{ 
             maxWidth: `${GAME_WIDTH}px`,
             maxHeight: `${GAME_HEIGHT}px`,
-            width: '95%',
-            height: '90%',
-            minWidth: '320px',
-            minHeight: '240px'
+            width: '98%',    // Aumentado de 95% a 98%
+            height: '95%',   // Aumentado de 90% a 95%
+            minWidth: '400px',  // Aumentado de 320px a 400px
+            minHeight: '300px'  // Aumentado de 240px a 300px
           }}
           role="main"
         >
@@ -203,7 +204,7 @@ const App: React.FC = () => {
 
       {/* Footer */}
       <footer className="bg-slate-800 border-t-4 border-sky-500 shadow-lg footer-shimmer">
-        <div className="max-w-6xl mx-auto px-4 py-4">
+        <div className="max-w-6xl mx-auto px-3 py-2">  {/* Reducido padding del footer */}
           <div className="flex flex-col sm:flex-row items-center justify-between space-y-2 sm:space-y-0 footer-content">
             <div className="flex flex-col sm:flex-row items-center space-y-1 sm:space-y-0 sm:space-x-4 text-slate-300">
               <span className="text-sm font-medium">© 2025 Ninja Go Action Arcade</span>

@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test de Imágenes de Villanos</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #1a1a1a;
+            color: white;
+        }
+        .image-test {
+            display: inline-block;
+            margin: 10px;
+            text-align: center;
+            border: 2px solid #444;
+            padding: 10px;
+            border-radius: 8px;
+        }
+        .image-test img {
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 3px solid #ff4444;
+        }
+        .image-test h3 {
+            margin: 10px 0 5px 0;
+            font-size: 14px;
+        }
+        .status {
+            margin: 5px 0;
+            padding: 3px 6px;
+            border-radius: 3px;
+            font-size: 12px;
+        }
+        .success { background-color: #28a745; }
+        .error { background-color: #dc3545; }
+    </style>
+</head>
+<body>
+    <h1>Test de Carga de Imágenes de Villanos - Ninjago</h1>
+    <p>Este test verifica si todas las imágenes de villanos se cargan correctamente.</p>
+    
+    <div id="results"></div>
+
+    <script>
+        const VILLAIN_IMAGES = [
+            'lord-vortech-as-a-ninjago-villain-v0-3mpyxo2gwx5f1.webp',
+            'Ninja_Hero_Frak_29.webp',
+            'what-is-the-oni-form-of-garmadon.webp',
+            'LAND_16_9 (1).jpg',
+            'images (1)jj.jpg',
+            'FangtomS1.webp'
+        ];
+
+        const resultsContainer = document.getElementById('results');
+
+        function testImage(imageName) {
+            return new Promise((resolve) => {
+                const img = new Image();
+                const container = document.createElement('div');
+                container.className = 'image-test';
+                
+                const title = document.createElement('h3');
+                title.textContent = imageName;
+                container.appendChild(title);
+                
+                const imgElement = document.createElement('img');
+                const statusElement = document.createElement('div');
+                statusElement.className = 'status';
+                
+                img.onload = function() {
+                    imgElement.src = this.src;
+                    statusElement.textContent = '✅ Cargada correctamente';
+                    statusElement.classList.add('success');
+                    resolve({ name: imageName, success: true });
+                };
+                
+                img.onerror = function() {
+                    imgElement.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgZmlsbD0iI2ZmNDQ0NCIvPjx0ZXh0IHg9IjUwIiB5PSI1NSIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjE0IiBmaWxsPSJ3aGl0ZSIgdGV4dC1hbmNob3I9Im1pZGRsZSI+RXJyb3I8L3RleHQ+PC9zdmc+';
+                    statusElement.textContent = '❌ Error al cargar';
+                    statusElement.classList.add('error');
+                    resolve({ name: imageName, success: false });
+                };
+                
+                // Test different possible paths
+                const basePaths = [
+                    '/pictures/villains/',
+                    './pictures/villains/',
+                    'pictures/villains/',
+                    '/public/pictures/villains/',
+                    './public/pictures/villains/'
+                ];
+                
+                let pathIndex = 0;
+                function tryNextPath() {
+                    if (pathIndex < basePaths.length) {
+                        img.src = basePaths[pathIndex] + imageName;
+                        pathIndex++;
+                        setTimeout(() => {
+                            if (!img.complete || img.naturalWidth === 0) {
+                                tryNextPath();
+                            }
+                        }, 1000);
+                    }
+                }
+                
+                tryNextPath();
+                
+                container.appendChild(imgElement);
+                container.appendChild(statusElement);
+                resultsContainer.appendChild(container);
+            });
+        }
+
+        async function runTests() {
+            console.log('Iniciando tests de imágenes de villanos...');
+            const results = [];
+            
+            for (const imageName of VILLAIN_IMAGES) {
+                const result = await testImage(imageName);
+                results.push(result);
+            }
+            
+            const successful = results.filter(r => r.success).length;
+            const total = results.length;
+            
+            const summary = document.createElement('div');
+            summary.innerHTML = `
+                <h2>Resumen de Resultados</h2>
+                <p><strong>${successful}/${total}</strong> imágenes cargadas correctamente</p>
+                ${successful === total ? 
+                    '<p style="color: #28a745;">✅ Todas las imágenes funcionan correctamente</p>' : 
+                    '<p style="color: #dc3545;">❌ Algunas imágenes no se pudieron cargar</p>'
+                }
+            `;
+            resultsContainer.insertBefore(summary, resultsContainer.firstChild);
+            
+            console.log('Test completado:', results);
+        }
+
+        // Ejecutar tests cuando se carga la página
+        runTests();
+    </script>
+</body>
+</html>

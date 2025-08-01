@@ -32,7 +32,13 @@ const VILLAIN_IMAGES = [
   'what-is-the-oni-form-of-garmadon.webp',
   'LAND_16_9 (1).jpg',
   'images (1)jj.jpg',
-  'FangtomS1.webp'
+  'FangtomS1.webp',
+  'LEGO-NINJAGO-Garmadon-issue-3-cover-800x445.webp',
+  'Lord_Gar.webp',
+  'ninjacomer.jpg',
+  'njo309_medium.jpg',
+  'Lava-Dragon.webp',
+  'Butch-Villain.webp'
 ];
 
 export const TargetPracticeScreen: React.FC<TargetPracticeScreenProps> = ({ onGameOver }) => {

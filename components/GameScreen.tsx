@@ -1,7 +1,10 @@
 
 import React, { useState, useEffect, useCallback, useRef } from 'react';
-import { FlyingObjectState, GameObjectType, GameStatus } from '../types';
+import { FlyingObjectState, GameObjectType, DragonShipState, DragonFireState, ExplosionState } from '../types';
 import { FlyingObject } from './FlyingObject';
+import { DragonShip } from './DragonShip';
+import { DragonFire } from './DragonFire';
+import { ExplosionEffect } from './ExplosionEffect';
 import { ScoreDisplay } from './ScoreDisplay';
 import {
   GAME_WIDTH,
@@ -13,6 +16,14 @@ import {
   OBJECT_MIN_ROTATION_SPEED,
   OBJECT_MAX_ROTATION_SPEED,
   INITIAL_LIVES,
+  DRAGON_SHIP_WIDTH,
+  DRAGON_SHIP_HEIGHT,
+  DRAGON_SHIP_SPEED,
+  DRAGON_FIRE_SPEED,
+  DRAGON_FIRE_SIZE,
+  DRAGON_FIRE_COOLDOWN_MS,
+  MAX_DRAGON_FIRES,
+  MAX_FLYING_OBJECTS,
 } from '../constants';
 
 interface GameScreenProps {
@@ -25,10 +36,140 @@ export const GameScreen: React.FC<GameScreenProps> = ({ onGameOver }) => {
   const [flyingObjects, setFlyingObjects] = useState<FlyingObjectState[]>([]);
   const [score, setScore] = useState(0);
   const [lives, setLives] = useState(INITIAL_LIVES);
+  const [dragonShip, setDragonShip] = useState<DragonShipState>({
+    id: 'dragon-ship',
+    x: GAME_WIDTH / 2,
+    y: GAME_HEIGHT - 100,
+    width: DRAGON_SHIP_WIDTH,
+    height: DRAGON_SHIP_HEIGHT,
+    rotation: 0,
+  });
+  const [dragonFires, setDragonFires] = useState<DragonFireState[]>([]);
+  const [explosions, setExplosions] = useState<ExplosionState[]>([]);
+  const [keys, setKeys] = useState<{[key: string]: boolean}>({});
+  const [lastFireTime, setLastFireTime] = useState<number>(0);
+  
   const gameAreaRef = useRef<HTMLDivElement>(null);
   const lastSpawnTimeRef = useRef<number>(0);
 
+  // Función para disparar fuego desde el dragón
+  const fireDragonFire = useCallback(() => {
+    const now = performance.now();
+    if (now - lastFireTime < DRAGON_FIRE_COOLDOWN_MS || dragonFires.length >= MAX_DRAGON_FIRES) {
+      return;
+    }
+
+    const newFire: DragonFireState = {
+      id: generateId(),
+      x: dragonShip.x,
+      y: dragonShip.y - dragonShip.height / 2,
+      vx: 0,
+      vy: -DRAGON_FIRE_SPEED,
+      size: DRAGON_FIRE_SIZE,
+      createdAt: now,
+    };
+
+    setDragonFires(prev => [...prev, newFire]);
+    setLastFireTime(now);
+  }, [dragonShip, dragonFires.length, lastFireTime]);
+
+  // Función para mover el dragón
+  const moveDragon = useCallback(() => {
+    setDragonShip(prevDragon => {
+      let newX = prevDragon.x;
+      let newY = prevDragon.y;
+      let newRotation = 0;
+
+      if (keys['ArrowLeft'] || keys['a'] || keys['A']) {
+        newX = Math.max(prevDragon.width / 2, newX - DRAGON_SHIP_SPEED);
+        newRotation = -15;
+      }
+      if (keys['ArrowRight'] || keys['d'] || keys['D']) {
+        newX = Math.min(GAME_WIDTH - prevDragon.width / 2, newX + DRAGON_SHIP_SPEED);
+        newRotation = 15;
+      }
+      if (keys['ArrowUp'] || keys['w'] || keys['W']) {
+        newY = Math.max(prevDragon.height / 2, newY - DRAGON_SHIP_SPEED);
+      }
+      if (keys['ArrowDown'] || keys['s'] || keys['S']) {
+        newY = Math.min(GAME_HEIGHT - prevDragon.height / 2, newY + DRAGON_SHIP_SPEED);
+      }
+
+      return {
+        ...prevDragon,
+        x: newX,
+        y: newY,
+        rotation: newRotation,
+      };
+    });
+  }, [keys]);
+
+  // Crear explosión
+  const createExplosion = useCallback((x: number, y: number, type: 'fire' | 'bomb' | 'impact') => {
+    const newExplosion: ExplosionState = {
+      id: generateId(),
+      x,
+      y,
+      type,
+      createdAt: performance.now(),
+    };
+    setExplosions(prev => [...prev, newExplosion]);
+  }, []);
+
+  // Eliminar explosión completada
+  const removeExplosion = useCallback((explosionId: string) => {
+    setExplosions(prev => prev.filter(explosion => explosion.id !== explosionId));
+  }, []);
+
+  // Detectar colisiones entre fuego de dragón y objetos
+  const checkFireCollisions = useCallback(() => {
+    setDragonFires(prevFires => 
+      prevFires.filter(fire => {
+        let fireHit = false;
+        
+        setFlyingObjects(prevObjects => 
+          prevObjects.filter(obj => {
+            const distance = Math.sqrt(
+              Math.pow(fire.x - obj.x, 2) + Math.pow(fire.y - obj.y, 2)
+            );
+            
+            if (distance < (fire.size + obj.config.size) / 2) {
+              fireHit = true;
+              
+              // Crear explosión en la posición del objeto
+              const explosionType = obj.config.isBomb ? 'bomb' : 'fire';
+              createExplosion(obj.x, obj.y, explosionType);
+              
+              console.log(`🎯 Colisión detectada! Objeto eliminado: ${obj.type}, Explosión: ${explosionType}`);
+              
+              if (obj.config.isBomb) {
+                setLives(prev => Math.max(0, prev - 1));
+              } else {
+                setScore(prev => prev + obj.config.points);
+              }
+              
+              return false; // Remover objeto
+            }
+            return true;
+          })
+        );
+        
+        if (fireHit) {
+          console.log('🔥 Proyectil eliminado por colisión');
+        }
+        
+        return !fireHit;
+      })
+    );
+  }, [createExplosion]);
+
   const spawnObject = useCallback(() => {
+    // Verificar límite de objetos en pantalla
+    if (flyingObjects.length >= MAX_FLYING_OBJECTS) {
+      console.log(`⚠️ Límite de objetos alcanzado: ${flyingObjects.length}/${MAX_FLYING_OBJECTS}`);
+      return;
+    }
+    
     const objectTypes = Object.values(GameObjectType);
     const randomType = objectTypes[Math.floor(Math.random() * objectTypes.length)];
     const config = OBJECT_CONFIGS[randomType];
@@ -82,7 +223,7 @@ export const GameScreen: React.FC<GameScreenProps> = ({ onGameOver }) => {
       config,
     };
     setFlyingObjects(prev => [...prev, newObject]);
-  }, []);
+  }, [flyingObjects.length]); // Añadir dependencia para el límite de objetos
 
   const handleObjectClick = useCallback((id: string, type: GameObjectType) => {
     setFlyingObjects(prev => prev.filter(obj => obj.id !== id));
@@ -92,6 +233,63 @@ export const GameScreen: React.FC<GameScreenProps> = ({ onGameOver }) => {
     } else {
       setScore(prev => prev + config.points);
     }
+  }, []);
+
+  // Event listeners para controles del dragón
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      setKeys(prev => ({ ...prev, [event.key]: true }));
+      
+      // Disparar con barra espaciadora
+      if (event.key === ' ') {
+        event.preventDefault();
+        fireDragonFire();
+      }
+    };
+
+    const handleKeyUp = (event: KeyboardEvent) => {
+      setKeys(prev => ({ ...prev, [event.key]: false }));
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    window.addEventListener('keyup', handleKeyUp);
+
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+      window.removeEventListener('keyup', handleKeyUp);
+    };
+  }, [fireDragonFire]);
+
+  // Actualizar movimiento del dragón
+  useEffect(() => {
+    const interval = setInterval(() => {
+      moveDragon();
+      checkFireCollisions();
+    }, 16); // ~60 FPS
+
+    return () => clearInterval(interval);
+  }, [moveDragon, checkFireCollisions]);
+
+  // Limpiar proyectiles de fuego antiguos
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setDragonFires(prev => 
+        prev.filter(fire => {
+          const age = (performance.now() - fire.createdAt) / 1000;
+          return age < 3 && fire.y > -fire.size; // Remover después de 3 segundos o si sale de pantalla
+        })
+      );
+      
+      // Limpiar explosiones que han durado más de 2 segundos (por seguridad)
+      setExplosions(prev => 
+        prev.filter(explosion => {
+          const age = (performance.now() - explosion.createdAt) / 1000;
+          return age < 2;
+        })
+      );
+    }, 100);
+
+    return () => clearInterval(interval);
   }, []);
 
   useEffect(() => {
@@ -104,8 +302,8 @@ export const GameScreen: React.FC<GameScreenProps> = ({ onGameOver }) => {
     let animationFrameId: number;
     
     const gameLoop = (timestamp: number) => {
-      setFlyingObjects(prevObjects =>
-        prevObjects
+      setFlyingObjects(prevObjects => {
+        const newObjects = prevObjects
           .map(obj => ({
             ...obj,
             x: obj.x + obj.vx,
@@ -121,7 +319,23 @@ export const GameScreen: React.FC<GameScreenProps> = ({ onGameOver }) => {
               // setLives(prev => Math.max(0, prev - 0.1)); // Example: Small penalty
             }
             return !isOffScreen;
-          })
+          });
+        
+        // Log de rendimiento cada 5 segundos
+        if (timestamp % 5000 < 16) {
+          console.log(`📊 Rendimiento - Objetos: ${newObjects.length}, Proyectiles: ${dragonFires.length}, Explosiones: ${explosions.length}`);
+        }
+        
+        return newObjects;
+      });
+
+      // Actualizar proyectiles de fuego del dragón
+      setDragonFires(prevFires =>
+        prevFires.map(fire => ({
+          ...fire,
+          x: fire.x + fire.vx,
+          y: fire.y + fire.vy,
+        }))
       );
 
       if (timestamp - lastSpawnTimeRef.current > OBJECT_SPAWN_INTERVAL_MS) {
@@ -145,11 +359,43 @@ export const GameScreen: React.FC<GameScreenProps> = ({ onGameOver }) => {
       style={{ width: GAME_WIDTH, height: GAME_HEIGHT }}
     >
       <ScoreDisplay score={score} lives={lives} />
+      
+      {/* Objetos voladores */}
       {flyingObjects.map(obj => (
         <FlyingObject key={obj.id} objectState={obj} onClick={handleObjectClick} />
       ))}
-      {/* Background elements can be added here */}
-       <div className="absolute inset-0 pointer-events-none opacity-10" style={{backgroundImage: `url("https://www.transparenttextures.com/patterns/carbon-fibre.png")`}}></div>
+      
+      {/* Nave Dragón */}
+      <DragonShip dragonShip={dragonShip} />
+      
+      {/* Proyectiles de fuego del dragón */}
+      {dragonFires.map(fire => (
+        <DragonFire key={fire.id} fire={fire} />
+      ))}
+      
+      {/* Efectos de explosión */}
+      {explosions.map(explosion => (
+        <ExplosionEffect 
+          key={explosion.id}
+          x={explosion.x}
+          y={explosion.y}
+          type={explosion.type}
+          onComplete={() => removeExplosion(explosion.id)}
+        />
+      ))}
+      
+      {/* Instrucciones de control */}
+      <div className="absolute top-16 left-4 text-white text-sm opacity-75 pointer-events-none">
+        <div className="bg-black bg-opacity-50 rounded p-2">
+          <div>🐲 Controles del Dragón:</div>
+          <div>⬅️➡️⬆️⬇️ Mover</div>
+          <div>WASD Mover</div>
+          <div>Espacio 🔥 Disparar</div>
+        </div>
+      </div>
+      
+      {/* Background elements */}
+      <div className="absolute inset-0 pointer-events-none opacity-10" style={{backgroundImage: `url("https://www.transparenttextures.com/patterns/carbon-fibre.png")`}}></div>
     </div>
   );
 };

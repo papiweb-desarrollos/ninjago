@@ -1,0 +1,44 @@
+📺 CATÁLOGO DE VIDEOS - NINJAGO GAME
+==========================================
+
+📊 RESUMEN:
+- Total de videos disponibles: 26
+- Contenido oficial NINJAGO: 6 videos
+- Videos generados: 20 videos
+- Última actualización: 20 de Junio, 2025
+
+🎬 CONTENIDO OFICIAL NINJAGO:
+1. [ninjago1] LEGO NINJAGO: Cacería - Temporada 9
+   └── Episodio 93 - LEGO NINJAGO_ Cacería - Temporada 9.mp4
+
+2. [ninjago2] LEGO NINJAGO LA PELÍCULA - Trailer 2
+   └── LEGO® NINJAGO® LA PELÍCULA - Trailer 2 - Oficial Warner Bros. Pictures.mp4
+
+3. [ninjago3] Lego Ninjago La película
+   └── Lego Ninjago La película  1.mp4
+
+4. [ninjago4] Los de LEGO MOVIE como Polícias
+   └── Los de LEGO MOVIE como Polícias.mp4
+
+5. [ninjago5] NINJAGO: El Ascenso de los Dragones - Los perdidos
+   └── Los perdidos 👀 ｜ T3, E1 ｜ Episodio completo ｜ LEGO NINJAGO： El Ascenso de los Dragones.mp4
+
+6. [main] Video Principal
+   └── videoplayback.mp4
+
+📹 VIDEOS GENERADOS (20 archivos):
+- [gen1-gen6] Sesión de la tarde (13:45 - 13:53)
+- [gen7-gen11] Sesión de la tarde (16:30 - 16:35)  
+- [gen12-gen20] Sesión de la noche (17:15 - 17:32)
+
+📝 NOTAS:
+- Todos los videos están configurados en constants.tsx
+- Los paths apuntan a /videos/ en el directorio público
+- El reproductor de video del juego puede acceder a todos estos archivos
+- Los IDs únicos permiten navegación programática
+
+🔧 CONFIGURACIÓN:
+- Archivo de configuración: /constants.tsx
+- Array: VIDEO_CATALOG
+- Tipo: VideoInfo[]
+- Campos: id, title, fileName, path, description

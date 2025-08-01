@@ -1294,3 +1294,93 @@ body {
       0 0 12px currentColor;
   }
 }
+
+/* ========================================
+   OPTIMIZACIONES DE TAMAÑO DEL CANVAS
+   ======================================== */
+
+/* Contenedor principal del juego optimizado */
+.main-container {
+  padding: 0.5rem; /* Reducir padding para maximizar espacio */
+}
+
+/* Mejorar uso del viewport en pantallas grandes */
+@media (min-width: 1400px) {
+  .main-container {
+    padding: 0.25rem; /* Aún menos padding en pantallas grandes */
+  }
+}
+
+/* Optimización para pantallas muy grandes */
+@media (min-width: 1800px) {
+  .main-container {
+    padding: 0.125rem; /* Mínimo padding en pantallas extra grandes */
+  }
+}
+
+/* Escala suave para hacer que el contenido se vea más grande */
+.hover\:scale-101:hover {
+  transform: scale(1.01);
+}
+
+/* Asegurar que el contenedor del juego use todo el espacio disponible */
+.game-container-large {
+  width: 99vw !important;
+  height: 96vh !important;
+  max-width: 1600px;
+  max-height: 1000px;
+}
+
+/* Efectos de enfoque mejorados para el canvas grande */
+.game-focus-enhanced {
+  border-width: 6px !important;
+  box-shadow: 
+    0 0 50px rgba(59, 130, 246, 0.3),
+    0 0 100px rgba(59, 130, 246, 0.2),
+    inset 0 0 30px rgba(15, 23, 42, 0.8) !important;
+}
+
+/* ========================================
+   ANIMACIONES DE EXPLOSIÓN
+   ======================================== */
+
+@keyframes sparkle {
+  0% { 
+    transform: translate(-50%, -50%) scale(0); 
+    opacity: 1; 
+  }
+  50% { 
+    transform: translate(-50%, -50%) scale(1.5); 
+    opacity: 0.8; 
+  }
+  100% { 
+    transform: translate(-50%, -50%) scale(0); 
+    opacity: 0; 
+  }
+}
+
+@keyframes explosion-blast {
+  0% { 
+    transform: scale(0) rotate(0deg); 
+    opacity: 1; 
+  }
+  50% { 
+    transform: scale(1.2) rotate(180deg); 
+    opacity: 0.9; 
+  }
+  100% { 
+    transform: scale(2) rotate(360deg); 
+    opacity: 0; 
+  }
+}
+
+@keyframes shockwave {
+  0% { 
+    transform: scale(0); 
+    opacity: 0.8; 
+  }
+  100% { 
+    transform: scale(3); 
+    opacity: 0; 
+  }
+}

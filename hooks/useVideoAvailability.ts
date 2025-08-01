@@ -39,14 +39,18 @@ export const useVideoAvailability = (videos: VideoInfo[]) => {
         const contentLength = response.headers.get('content-length');
         const size = contentLength ? parseInt(contentLength, 10) : undefined;
 
+        // Verificar si es un archivo Git LFS no descargado (muy pequeño)
+        const isGitLFSPointer = size && size < 1000;
+
         console.log(`${isAvailable ? '✅' : '❌'} ${video.title}: ${response.status} ${response.statusText}${size ? ` (${(size / 1024 / 1024).toFixed(1)}MB)` : ''}`);
 
         setVideoStatus(prev => ({
           ...prev,
           [video.id]: {
-            available: isAvailable,
+            available: isAvailable && !isGitLFSPointer,
             loading: false,
-            error: isAvailable ? undefined : `HTTP ${response.status}: ${response.statusText}`,
+            error: !isAvailable ? `HTTP ${response.status}: ${response.statusText}` : 
+                   isGitLFSPointer ? 'Git LFS pointer - ejecuta "git lfs pull" para descargar' : undefined,
             size
           }
         }));
