@@ -153,7 +153,251 @@ export const SCORE_ORB_DEFINITIONS: Record<ScoreOrbType, { basePoints: number; c
 
 // === VIDEO PLAYER CATALOG ===
 export const VIDEO_CATALOG: VideoInfo[] = [
-  // ... (igual que antes, lista de videos)
+  {
+    id: "gen_12_58_pm",
+    title: "Video Generado 12:58PM",
+    fileName: "Generated File July 27, 2025 - 12_58PM.mp4",
+    path: getAssetPath("/videos/Generated File July 27, 2025 - 12_58PM.mp4"),
+    description: "Video disponible (5.24MB)"
+  },
+  {
+    id: "gen_1_00_pm",
+    title: "Video Generado 1:00PM",
+    fileName: "Generated File July 27, 2025 - 1_00PM.mp4",
+    path: getAssetPath("/videos/Generated File July 27, 2025 - 1_00PM.mp4"),
+    description: "Video disponible (4.13MB)"
+  },
+  {
+    id: "gen_1_02_pm",
+    title: "Video Generado 1:02PM",
+    fileName: "Generated File July 27, 2025 - 1_02PM.mp4",
+    path: getAssetPath("/videos/Generated File July 27, 2025 - 1_02PM.mp4"),
+    description: "Video disponible (3.63MB)"
+  },
+  {
+    id: "gen_1_04_pm",
+    title: "Video Generado 1:04PM",
+    fileName: "Generated File July 27, 2025 - 1_04PM.mp4",
+    path: getAssetPath("/videos/Generated File July 27, 2025 - 1_04PM.mp4"),
+    description: "Video disponible (4.48MB)"
+  },
+  {
+    id: "gen_1_06_pm",
+    title: "Video Generado 1:06PM",
+    fileName: "Generated File July 27, 2025 - 1_06PM.mp4",
+    path: getAssetPath("/videos/Generated File July 27, 2025 - 1_06PM.mp4"),
+    description: "Video disponible (4.92MB)"
+  },
+  {
+    id: "generated_file__6",
+    title: "Generated File July 27, 2025 -entrenando",
+    fileName: "Generated File July 27, 2025 -entrenando.mp4",
+    path: getAssetPath("/videos/Generated File July 27, 2025 -entrenando.mp4"),
+    description: "Video disponible (18.22MB)"
+  },
+  {
+    id: "gen_1_45_pm",
+    title: "Video Generado 1:45PM",
+    fileName: "Generated File June 20, 2025 - 1_45PM.mp4",
+    path: getAssetPath("/videos/Generated File June 20, 2025 - 1_45PM.mp4"),
+    description: "Video disponible (5.04MB)"
+  },
+  {
+    id: "gen_1_46_pm",
+    title: "Video Generado 1:46PM",
+    fileName: "Generated File June 20, 2025 - 1_46PM.mp4",
+    path: getAssetPath("/videos/Generated File June 20, 2025 - 1_46PM.mp4"),
+    description: "Video disponible (4.98MB)"
+  },
+  {
+    id: "gen_1_48_pm",
+    title: "Video Generado 1:48PM",
+    fileName: "Generated File June 20, 2025 - 1_48PM.mp4",
+    path: getAssetPath("/videos/Generated File June 20, 2025 - 1_48PM.mp4"),
+    description: "Video disponible (4.27MB)"
+  },
+  {
+    id: "gen_1_50_pm",
+    title: "Video Generado 1:50PM",
+    fileName: "Generated File June 20, 2025 - 1_50PM.mp4",
+    path: getAssetPath("/videos/Generated File June 20, 2025 - 1_50PM.mp4"),
+    description: "Video disponible (3.41MB)"
+  },
+  {
+    id: "gen_1_51_pm",
+    title: "Video Generado 1:51PM",
+    fileName: "Generated File June 20, 2025 - 1_51PM.mp4",
+    path: getAssetPath("/videos/Generated File June 20, 2025 - 1_51PM.mp4"),
+    description: "Video disponible (2.64MB)"
+  },
+  {
+    id: "gen_1_53_pm",
+    title: "Video Generado 1:53PM",
+    fileName: "Generated File June 20, 2025 - 1_53PM.mp4",
+    path: getAssetPath("/videos/Generated File June 20, 2025 - 1_53PM.mp4"),
+    description: "Video disponible (2.75MB)"
+  },
+  {
+    id: "gen_4_30_pm",
+    title: "Video Generado 4:30PM",
+    fileName: "Generated File June 20, 2025 - 4_30PM.mp4",
+    path: getAssetPath("/videos/Generated File June 20, 2025 - 4_30PM.mp4"),
+    description: "Video disponible (4.11MB)"
+  },
+  {
+    id: "gen_4_31_pm",
+    title: "Video Generado 4:31PM",
+    fileName: "Generated File June 20, 2025 - 4_31PM.mp4",
+    path: getAssetPath("/videos/Generated File June 20, 2025 - 4_31PM.mp4"),
+    description: "Video disponible (2.54MB)"
+  },
+  {
+    id: "gen_4_32_pm",
+    title: "Video Generado 4:32PM",
+    fileName: "Generated File June 20, 2025 - 4_32PM.mp4",
+    path: getAssetPath("/videos/Generated File June 20, 2025 - 4_32PM.mp4"),
+    description: "Video disponible (3.70MB)"
+  },
+  {
+    id: "gen_4_34_pm",
+    title: "Video Generado 4:34PM",
+    fileName: "Generated File June 20, 2025 - 4_34PM.mp4",
+    path: getAssetPath("/videos/Generated File June 20, 2025 - 4_34PM.mp4"),
+    description: "Video disponible (2.54MB)"
+  },
+  {
+    id: "gen_4_35_pm",
+    title: "Video Generado 4:35PM",
+    fileName: "Generated File June 20, 2025 - 4_35PM.mp4",
+    path: getAssetPath("/videos/Generated File June 20, 2025 - 4_35PM.mp4"),
+    description: "Video disponible (3.82MB)"
+  },
+  {
+    id: "gen_5_15_pm",
+    title: "Video Generado 5:15PM",
+    fileName: "Generated File June 20, 2025 - 5_15PM.mp4",
+    path: getAssetPath("/videos/Generated File June 20, 2025 - 5_15PM.mp4"),
+    description: "Video disponible (5.96MB)"
+  },
+  {
+    id: "gen_5_18_pm",
+    title: "Video Generado 5:18PM",
+    fileName: "Generated File June 20, 2025 - 5_18PM.mp4",
+    path: getAssetPath("/videos/Generated File June 20, 2025 - 5_18PM.mp4"),
+    description: "Video disponible (7.10MB)"
+  },
+  {
+    id: "gen_5_19_pm",
+    title: "Video Generado 5:19PM",
+    fileName: "Generated File June 20, 2025 - 5_19PM.mp4",
+    path: getAssetPath("/videos/Generated File June 20, 2025 - 5_19PM.mp4"),
+    description: "Video disponible (5.44MB)"
+  },
+  {
+    id: "gen_5_22_pm",
+    title: "Video Generado 5:22PM",
+    fileName: "Generated File June 20, 2025 - 5_22PM.mp4",
+    path: getAssetPath("/videos/Generated File June 20, 2025 - 5_22PM.mp4"),
+    description: "Video disponible (7.47MB)"
+  },
+  {
+    id: "gen_5_23_pm",
+    title: "Video Generado 5:23PM",
+    fileName: "Generated File June 20, 2025 - 5_23PM.mp4",
+    path: getAssetPath("/videos/Generated File June 20, 2025 - 5_23PM.mp4"),
+    description: "Video disponible (3.97MB)"
+  },
+  {
+    id: "gen_5_28_pm",
+    title: "Video Generado 5:28PM",
+    fileName: "Generated File June 20, 2025 - 5_28PM.mp4",
+    path: getAssetPath("/videos/Generated File June 20, 2025 - 5_28PM.mp4"),
+    description: "Video disponible (5.98MB)"
+  },
+  {
+    id: "gen_5_29_pm",
+    title: "Video Generado 5:29PM",
+    fileName: "Generated File June 20, 2025 - 5_29PM.mp4",
+    path: getAssetPath("/videos/Generated File June 20, 2025 - 5_29PM.mp4"),
+    description: "Video disponible (4.70MB)"
+  },
+  {
+    id: "gen_5_31_pm",
+    title: "Video Generado 5:31PM",
+    fileName: "Generated File June 20, 2025 - 5_31PM.mp4",
+    path: getAssetPath("/videos/Generated File June 20, 2025 - 5_31PM.mp4"),
+    description: "Video disponible (6.01MB)"
+  },
+  {
+    id: "gen_5_32_pm",
+    title: "Video Generado 5:32PM",
+    fileName: "Generated File June 20, 2025 - 5_32PM.mp4",
+    path: getAssetPath("/videos/Generated File June 20, 2025 - 5_32PM.mp4"),
+    description: "Video disponible (5.87MB)"
+  },
+  {
+    id: "whisk_3bf0751d6_27",
+    title: "Whisk 3bf0751d68",
+    fileName: "Whisk_3bf0751d68.mp4",
+    path: getAssetPath("/videos/Whisk_3bf0751d68.mp4"),
+    description: "Video disponible (3.72MB)"
+  },
+  {
+    id: "whisk_c7339c86e_28",
+    title: "Whisk c7339c86ef",
+    fileName: "Whisk_c7339c86ef.mp4",
+    path: getAssetPath("/videos/Whisk_c7339c86ef.mp4"),
+    description: "Video disponible (4.13MB)"
+  },
+  {
+    id: "generadohoy_mp4_29",
+    title: "generadohoy",
+    fileName: "generadohoy.mp4",
+    path: getAssetPath("/videos/generadohoy.mp4"),
+    description: "Video disponible (5.56MB)"
+  },
+  {
+    id: "publicvideosepi_30",
+    title: "publicvideosEpisodio 93 - LEGO NINJAGO  Cacería - Temporada 9",
+    fileName: "publicvideosEpisodio 93 - LEGO NINJAGO_ Cacería - Temporada 9.mp4",
+    path: getAssetPath("/videos/publicvideosEpisodio 93 - LEGO NINJAGO_ Cacería - Temporada 9.mp4"),
+    description: "Video disponible (2.40MB)"
+  },
+  {
+    id: "publicvideosleg_31",
+    title: "publicvideosLEGO® NINJAGO® LA PELÍCULA - Trailer 2 - Oficial Warner Bros. Pictures",
+    fileName: "publicvideosLEGO® NINJAGO® LA PELÍCULA - Trailer 2 - Oficial Warner Bros. Pictures.mp4",
+    path: getAssetPath("/videos/publicvideosLEGO® NINJAGO® LA PELÍCULA - Trailer 2 - Oficial Warner Bros. Pictures.mp4"),
+    description: "Video disponible (3.84MB)"
+  },
+  {
+    id: "publicvideosleg_32",
+    title: "publicvideosLego Ninjago La película  1",
+    fileName: "publicvideosLego Ninjago La película  1.mp4",
+    path: getAssetPath("/videos/publicvideosLego Ninjago La película  1.mp4"),
+    description: "Video disponible (3.01MB)"
+  },
+  {
+    id: "publicvideoslos_33",
+    title: "publicvideosLos de LEGO MOVIE como Polícias",
+    fileName: "publicvideosLos de LEGO MOVIE como Polícias.mp4",
+    path: getAssetPath("/videos/publicvideosLos de LEGO MOVIE como Polícias.mp4"),
+    description: "Video disponible (5.56MB)"
+  },
+  {
+    id: "publicvideoslos_34",
+    title: "publicvideosLos perdidos 👀 ｜ T3, E1 ｜ Episodio completo ｜ LEGO NINJAGO： El Ascenso de los Dragones",
+    fileName: "publicvideosLos perdidos 👀 ｜ T3, E1 ｜ Episodio completo ｜ LEGO NINJAGO： El Ascenso de los Dragones.mp4",
+    path: getAssetPath("/videos/publicvideosLos perdidos 👀 ｜ T3, E1 ｜ Episodio completo ｜ LEGO NINJAGO： El Ascenso de los Dragones.mp4"),
+    description: "Video disponible (5.95MB)"
+  },
+  {
+    id: "videosvideoplay_35",
+    title: "videosvideoplayback",
+    fileName: "videosvideoplayback.mp4",
+    path: getAssetPath("/videos/videosvideoplayback.mp4"),
+    description: "Video disponible (3.35MB)"
+  }
 ];
 
 // === SOUND FILES ===
