@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prueba de Videos - Ninjago</title>
+    <style>
+        body { 
+            font-family: Arial, sans-serif; 
+            margin: 20px; 
+            background: #1e293b;
+            color: white;
+        }
+        .video-container { 
+            margin: 20px 0; 
+            padding: 20px; 
+            border: 1px solid #374151; 
+            border-radius: 8px;
+            background: #374151;
+        }
+        video { 
+            width: 100%; 
+            max-width: 600px; 
+            height: auto; 
+        }
+        .error { 
+            color: #ef4444; 
+            background: #7f1d1d;
+            padding: 10px;
+            border-radius: 4px;
+        }
+        .success { 
+            color: #10b981; 
+            background: #064e3b;
+            padding: 10px;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <h1>🎬 Prueba de Videos Ninjago</h1>
+    <p>Verificando las rutas de videos disponibles...</p>
+    
+    <div class="video-container">
+        <h3>Video 1: Generated File July 27, 2025 - 12_58PM.mp4</h3>
+        <video controls preload="metadata">
+            <source src="/videos/Generated File July 27, 2025 - 12_58PM.mp4" type="video/mp4">
+            <div class="error">Tu navegador no soporta video HTML5.</div>
+        </video>
+        <p><strong>Ruta:</strong> /videos/Generated File July 27, 2025 - 12_58PM.mp4</p>
+    </div>
+
+    <div class="video-container">
+        <h3>Video 2: Generated File July 27, 2025 - 1_00PM.mp4</h3>
+        <video controls preload="metadata">
+            <source src="/videos/Generated File July 27, 2025 - 1_00PM.mp4" type="video/mp4">
+            <div class="error">Tu navegador no soporta video HTML5.</div>
+        </video>
+        <p><strong>Ruta:</strong> /videos/Generated File July 27, 2025 - 1_00PM.mp4</p>
+    </div>
+
+    <div class="video-container">
+        <h3>Video 3: generadohoy.mp4</h3>
+        <video controls preload="metadata">
+            <source src="/videos/generadohoy.mp4" type="video/mp4">
+            <div class="error">Tu navegador no soporta video HTML5.</div>
+        </video>
+        <p><strong>Ruta:</strong> /videos/generadohoy.mp4</p>
+    </div>
+
+    <div class="video-container">
+        <h3>Video 4: Whisk_3bf0751d68.mp4</h3>
+        <video controls preload="metadata">
+            <source src="/videos/Whisk_3bf0751d68.mp4" type="video/mp4">
+            <div class="error">Tu navegador no soporta video HTML5.</div>
+        </video>
+        <p><strong>Ruta:</strong> /videos/Whisk_3bf0751d68.mp4</p>
+    </div>
+
+    <script>
+        // JavaScript para verificar si los videos cargan correctamente
+        document.addEventListener('DOMContentLoaded', function() {
+            const videos = document.querySelectorAll('video');
+            
+            videos.forEach((video, index) => {
+                video.addEventListener('loadstart', function() {
+                    console.log(`✅ Video ${index + 1}: Iniciando carga`);
+                });
+                
+                video.addEventListener('loadedmetadata', function() {
+                    console.log(`✅ Video ${index + 1}: Metadatos cargados - Duración: ${video.duration}s`);
+                    const container = video.closest('.video-container');
+                    const successMsg = document.createElement('div');
+                    successMsg.className = 'success';
+                    successMsg.textContent = `✅ Video cargado correctamente - Duración: ${Math.round(video.duration)}s`;
+                    container.appendChild(successMsg);
+                });
+                
+                video.addEventListener('error', function(e) {
+                    console.error(`❌ Video ${index + 1}: Error de carga`, e);
+                    const container = video.closest('.video-container');
+                    const errorMsg = document.createElement('div');
+                    errorMsg.className = 'error';
+                    errorMsg.textContent = `❌ Error: No se pudo cargar el video. Código: ${video.error?.code || 'Desconocido'}`;
+                    container.appendChild(errorMsg);
+                });
+            });
+            
+            // Test de rutas con fetch
+            const testRoutes = [
+                '/videos/Generated File July 27, 2025 - 12_58PM.mp4',
+                '/videos/Generated File July 27, 2025 - 1_00PM.mp4',
+                '/videos/generadohoy.mp4',
+                '/videos/Whisk_3bf0751d68.mp4'
+            ];
+            
+            console.log('🔍 Probando rutas con fetch...');
+            testRoutes.forEach(async (route, index) => {
+                try {
+                    const response = await fetch(route, { method: 'HEAD' });
+                    console.log(`✅ Ruta ${index + 1} (${route}): ${response.status} ${response.statusText}`);
+                } catch (error) {
+                    console.error(`❌ Ruta ${index + 1} (${route}): Error`, error);
+                }
+            });
+        });
+    </script>
+</body>
+</html>
