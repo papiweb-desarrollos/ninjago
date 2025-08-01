@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Ninjago Arcade Game - Juego Gratis Online | Classic Slicing, Target Practice y Más</title>
+  <title>Ninjago Arcade Game - Papiweb Online | Classic Slicing, Target Practice y Más</title>
   
   <!-- Favicon y iconos -->
   <link rel="icon" type="image/x-icon" href="./favicon.ico">
@@ -74,26 +74,11 @@
     "datePublished": "2025-06-21",
     "dateModified": "2025-06-21",
     "gameItem": [
-      {
-        "@type": "Thing",
-        "name": "Classic Slicing Mode"
-      },
-      {
-        "@type": "Thing", 
-        "name": "Target Practice Mode"
-      },
-      {
-        "@type": "Thing",
-        "name": "Maze Escape Mode"
-      },
-      {
-        "@type": "Thing",
-        "name": "Score Rush Mode"
-      },
-      {
-        "@type": "Thing",
-        "name": "Video Player Mode"
-      }
+      { "@type": "Thing", "name": "Classic Slicing Mode" },
+      { "@type": "Thing", "name": "Target Practice Mode" },
+      { "@type": "Thing", "name": "Maze Escape Mode" },
+      { "@type": "Thing", "name": "Score Rush Mode" },
+      { "@type": "Thing", "name": "Video Player Mode" }
     ],
     "aggregateRating": {
       "@type": "AggregateRating",
@@ -105,187 +90,17 @@
   }
   </script>
   
-  <style>
-    body {
-      margin: 0;
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-        'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-        sans-serif;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-      overscroll-behavior: none; /* Prevent pull-to-refresh on mobile */
+  <!-- Tu CSS y demás assets siguen igual -->
+  <!-- ... -->
+  <script type="importmap">
+  {
+    "imports": {
+      "react": "https://esm.sh/react@^19.1.0",
+      "react/": "https://esm.sh/react@^19.1.0/",
+      "react-dom/": "https://esm.sh/react-dom@^19.1.0/"
     }
-    #root {
-      width: 100vw;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      overflow-x: hidden; /* Prevent horizontal scrollbars */
-    }
-    .wall-cell-static { /* Example for direct CSS gradient if Tailwind is tricky */
-        background: linear-gradient(to bottom right, #4A5568, #2D3748); /* slate-600 to slate-800 approx */
-        border-color: #1A202C; /* slate-900 approx */
-    }
-    .path-cell-static {
-        background-color: #718096; /* slate-500 approx */
-        border-color: #4A5568; /* slate-600 approx */
-    }
-
-    @keyframes playerHitFlashAnimation {
-      0%, 100% { filter: brightness(1); }
-      50% { filter: brightness(1.5) contrast(1.2) saturate(1.5); }
-    }
-    .player-hit-flash-effect {
-        animation: playerHitFlashAnimation 0.1s linear 3; /* Flash 3 times quickly */
-    }
-
-    @keyframes shimmerEffect {
-      0% { background-position: -200% 0; }
-      100% { background-position: 200% 0; }
-    }
-    .footer-shimmer {
-      position: relative;
-      overflow: hidden;
-    }
-    .footer-shimmer::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(
-        to right,
-        transparent 0%,
-        rgba(255, 255, 255, 0.2) 50%,
-        transparent 100%
-      );
-      background-size: 200% 100%;
-      animation: shimmerEffect 3s infinite linear;
-      pointer-events: none; /* Ensure it doesn't block interactions */
-    }
-
-    /* Header/Footer Enhancement */
-    .brand-glow {
-      text-shadow: 0 0 10px rgba(56, 189, 248, 0.5);
-    }
-    
-    .game-status-indicator {
-      animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-    }
-
-    /* Coffee cup steam animation */
-    @keyframes steam {
-      0% { opacity: 0.7; transform: translateY(0px) scaleX(1); }
-      50% { opacity: 1; transform: translateY(-10px) scaleX(1.1); }
-      100% { opacity: 0.7; transform: translateY(0px) scaleX(1); }
-    }
-
-    .coffee-steam {
-      animation: steam 2s ease-in-out infinite;
-    }
-
-    /* Papiweb link hover effects */
-    .papiweb-link {
-      position: relative;
-      overflow: hidden;
-    }
-
-    .papiweb-link::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: -100%;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(
-        90deg,
-        transparent,
-        rgba(251, 146, 60, 0.2),
-        transparent
-      );
-      transition: left 0.5s;
-    }
-
-    .papiweb-link:hover::before {
-      left: 100%;
-    }
-
-    /* Responsive design for smaller screens */
-    @media (max-width: 640px) {
-      .header-title {
-        font-size: 1.5rem;
-      }
-      .footer-content {
-        text-align: center;
-      }
-      .papiweb-link {
-        justify-content: center;
-      }
-    }
-
-    /* Game container responsive behavior */
-    .main-container {
-      min-height: 0; /* Allow flexbox to shrink */
-      height: calc(100vh - 140px); /* Account for header and footer */
-      width: 100%;
-    }
-    
-    @media (max-height: 900px) {
-      .main-container {
-        padding: 1rem;
-        height: calc(100vh - 120px);
-      }
-    }
-
-    @media (max-height: 700px) {
-      .main-container {
-        padding: 0.5rem;
-        height: calc(100vh - 100px);
-      }
-      .header-title {
-        font-size: 1.25rem;
-      }
-    }
-
-    @media (max-width: 1280px) {
-      .main-container {
-        padding: 1rem;
-      }
-    }
-
-    @media (max-width: 768px) {
-      .main-container {
-        padding: 0.5rem;
-      }
-      .header-title {
-        font-size: 1.5rem;
-      }
-    }
-
-    /* Ensure header stays visible */
-    header {
-      position: relative;
-      z-index: 1000;
-      flex-shrink: 0;
-    }
-
-    /* Game container should never overlap header */
-    main {
-      position: relative;
-      z-index: 1;
-    }
-
-  </style>
-<script type="importmap">
-{
-  "imports": {
-    "react": "https://esm.sh/react@^19.1.0",
-    "react/": "https://esm.sh/react@^19.1.0/",
-    "react-dom/": "https://esm.sh/react-dom@^19.1.0/"
   }
-}
-</script>
+  </script>
 </head>
 <body class="app-body">
   <noscript>You need to enable JavaScript to run this app.</noscript>

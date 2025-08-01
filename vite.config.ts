@@ -3,43 +3,36 @@ import react from '@vitejs/plugin-react';
 import path from 'path';
 
 export default defineConfig(({ mode }) => {
-    // Carga las variables de entorno (ej. desde un archivo .env)
-    const env = loadEnv(mode, '.', '');
+    // Carga variables de entorno (si las usás)
+    const env = loadEnv(mode, process.cwd());
 
     return {
-        // Añade el plugin de React, que es esencial para tu proyecto
         plugins: [react()],
 
-        // Esta es la forma correcta de establecer la base. 
-        // Usa '/ninjago/' para producción (GitHub Pages) y '/' para desarrollo local.
+        // Base correcto para GitHub Pages (ajusta a tu repo)
         base: mode === 'production' ? '/ninjago/' : '/',
 
-        // Define variables globales para usar en tu código
         define: {
-            'process.env.API_KEY': JSON.stringify(env.GEMINI_API_KEY),
+            // Define variables de entorno solo si las usás
             'process.env.GEMINI_API_KEY': JSON.stringify(env.GEMINI_API_KEY)
         },
 
-        // Configura alias para las rutas de importación
         resolve: {
             alias: {
+                // Usa @ para importar desde la raíz del proyecto
                 '@': path.resolve(__dirname, '.'),
             }
         },
 
-        // Tus otras configuraciones personalizadas
         publicDir: 'public',
+
         css: {
             postcss: './postcss.config.js'
         },
+
         build: {
             outDir: 'dist',
             assetsDir: 'assets',
-            rollupOptions: {
-                output: {
-                    manualChunks: undefined,
-                }
-            }
         }
     };
 });
